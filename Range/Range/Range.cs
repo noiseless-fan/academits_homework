@@ -59,5 +59,20 @@ namespace RangeClass
 				return new Range[] { new Range(newFrom, newTo) };
 			}
 		}
+
+		public static Range[] Subtraction(Range rng_fst, Range rng_sec)
+		{
+			if (rng_fst.To < rng_sec.From || rng_sec.To < rng_fst.From)
+			{
+				return new Range[] { rng_fst, rng_sec };
+			}
+			else
+			{
+				double newFrom = rng_fst.From >= rng_sec.From ? rng_fst.From : rng_sec.From;
+				double newTo = rng_fst.To <= rng_sec.To ? rng_fst.To : rng_sec.To;
+
+				return new Range[] { new Range(newFrom, newTo) };
+			}
+		}
 	}
 }

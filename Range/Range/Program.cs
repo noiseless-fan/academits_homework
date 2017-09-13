@@ -12,8 +12,8 @@ namespace RangeClass
 		{
 			public static void Main()
 			{
-				Range first = new Range(1, 3);
-				Range second = new Range(3, 5);
+				Range first = new Range(1, 2);
+				Range second = new Range(3, 6);
 
 				Console.WriteLine("Исходные диапазоны -------------------------------");
 
@@ -43,6 +43,13 @@ namespace RangeClass
 				}
 
 				Console.WriteLine("Тестируем вычитание -------------------------------");
+
+				Range[] subtractionTest = Range.Subtraction(first, second);
+
+				foreach (Range range in subtractionTest)
+				{
+					range.Print();
+				}
 
 				Console.ReadKey();
 			}
