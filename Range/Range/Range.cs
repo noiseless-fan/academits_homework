@@ -4,85 +4,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace solution1
+namespace RangeClass
 {
 	public class Range
 	{
-		private double from;
-		private double to;
-
-		public double GetFrom()
-		{
-			return from;
-		}
-
-		public double GetTo()
-		{
-			return to;
-		}
+		public double From { get; set; }
+		public double To { get; set; }
 
 		public Range(double from, double to)
 		{
-			this.from = from;
-			this.to = to;
+			From = from;
+			To = to;
 		}
 
 		public double Length()
 		{
-			return to - from;
+			return To - From;
 		}
 
 		public bool IsInside(double x)
 		{
-			return (x >= from && x <= to) ? true : false;
+			return (x >= From && x <= To);
 		}
 
 		public void Print()
 		{
-			Console.WriteLine(" от {0} до {1}", from, to);
+			Console.WriteLine(" от {0} до {1}", From, To);
 		}
 
-		public static Range Cross(Range first, Range second)
+		public Range Cross(Range second) //don't forget a null-check then using
 		{
-			if (!(first.IsInside(second.GetFrom()) || second.IsInside(first.GetFrom())))
+			if (this.To <= second.From || second.To <= this.From)
 			{
 				return null;
 			}
 
-			double firstFrom = first.GetFrom();
-			double firstTo = first.GetTo();
-			double secondFrom = second.GetFrom();
-			double secondTo = second.GetTo();
-
-			double crossFrom = firstFrom >= secondFrom ? firstFrom : secondFrom;
-			double crossTo = firstTo <= secondTo ? firstTo : secondTo;
+			double crossFrom = this.From > second.From ? this.From : second.From;
+			double crossTo = this.To < second.To ? this.To : second.To;
 
 			return new Range(crossFrom, crossTo);
 		}
-	}
 
-	public class RangeUsing
-	{
-		public static void Main()
+		public static Range[] Addition(Range rng_fst, Range rng_sec)
 		{
-			Range first = new Range(1, 3);
-			Range second = new Range(-3, 0);
-
-			first.Print();
-			second.Print();
-
-			Range cross = Range.Cross(first, second);
-
-			if (cross == null)
+			if (rng_fst.To < rng_sec.From || rng_sec.To < rng_fst.From)
 			{
-				Console.WriteLine("диапазоны не пересекаются");
+				return new Range[] { rng_fst, rng_sec };
 			}
 			else
 			{
-				cross.Print();
-			}
+				double newFrom = rng_fst.From <= rng_sec.From ? rng_fst.From : rng_sec.From;
+				double newTo = rng_fst.To >= rng_sec.To ? rng_fst.To : rng_sec.To;
 
-			Console.ReadKey();
+				return new Range[] { new Range(newFrom, newTo) };
+			}
 		}
 	}
 }

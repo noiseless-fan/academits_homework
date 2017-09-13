@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Range", "Range\Range.csproj", "{5070B999-AF34-472E-A95A-E61B96A94C97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RangeClass", "Range\RangeClass.csproj", "{5070B999-AF34-472E-A95A-E61B96A94C97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
