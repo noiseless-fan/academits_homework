@@ -10,16 +10,12 @@ namespace RangeClass
 	{
 		public double From { get; set; }
 		public double To { get; set; }
+		public double Length { get { return To - From; } }
 
 		public Range(double from, double to)
 		{
 			From = from;
 			To = to;
-		}
-
-		public double Length()
-		{
-			return To - From;
 		}
 
 		public bool IsInside(double x)
@@ -45,31 +41,31 @@ namespace RangeClass
 			return new Range(crossFrom, crossTo);
 		}
 
-		public static Range[] Addition(Range rng_fst, Range rng_sec)
+		public Range[] Addition(Range rangeTwo)
 		{
-			if (rng_fst.To < rng_sec.From || rng_sec.To < rng_fst.From)
+			if (To < rangeTwo.From || To < rangeTwo.From)
 			{
-				return new Range[] { rng_fst, rng_sec };
+				return new Range[] { this, rangeTwo };
 			}
 			else
 			{
-				double newFrom = rng_fst.From <= rng_sec.From ? rng_fst.From : rng_sec.From;
-				double newTo = rng_fst.To >= rng_sec.To ? rng_fst.To : rng_sec.To;
-
+				double newFrom = Math.Min(From, rangeTwo.From);//From <= rangeTwo.From ? From : rangeTwo.From; 
+				double newTo = Math.Max(To, rangeTwo.To);//To >= rangeTwo.To ? To : rangeTwo.To;
+				
 				return new Range[] { new Range(newFrom, newTo) };
 			}
 		}
 
-		public static Range[] Subtraction(Range rng_fst, Range rng_sec)
+		public Range[] Subtraction(Range rangeTwo)
 		{
-			if (rng_fst.To < rng_sec.From || rng_sec.To < rng_fst.From)
+			if (To < rangeTwo.From || To < rangeTwo.From)
 			{
-				return new Range[] { rng_fst, rng_sec };
+				return new Range[] { this, rangeTwo };
 			}
 			else
 			{
-				double newFrom = rng_fst.From >= rng_sec.From ? rng_fst.From : rng_sec.From;
-				double newTo = rng_fst.To <= rng_sec.To ? rng_fst.To : rng_sec.To;
+				double newFrom = Math.Max(From, rangeTwo.From);//rng_fst.From >= rng_sec.From ? rng_fst.From : rng_sec.From; 
+				double newTo = Math.Min(To, rangeTwo.To);//rng_fst.To <= rng_sec.To ? rng_fst.To : rng_sec.To;
 
 				return new Range[] { new Range(newFrom, newTo) };
 			}
