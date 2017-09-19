@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RangeClass
+namespace HomeWork_Lyulyaev
 {
 	public class Range
 	{
