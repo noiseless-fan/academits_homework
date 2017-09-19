@@ -30,22 +30,22 @@ namespace RangeClass
 
 		public Range Cross(Range second) //don't forget a null-check then using
 		{
-			if (this.To <= second.From || second.To <= this.From)
+			if (To <= second.From || second.To <= From)
 			{
 				return null;
 			}
 
-			double crossFrom = this.From > second.From ? this.From : second.From;
-			double crossTo = this.To < second.To ? this.To : second.To;
+			double crossFrom = Math.Max(From, second.From);
+			double crossTo = Math.Min(To, second.To);
 
 			return new Range(crossFrom, crossTo);
 		}
 
 		public Range[] Addition(Range rangeTwo)
 		{
-			if (To < rangeTwo.From || To < rangeTwo.From)
+			if (To < rangeTwo.From || rangeTwo.To < From)
 			{
-				return new Range[] { this, rangeTwo };
+				return new Range[] { new Range(From, To), new Range(rangeTwo.From, rangeTwo.To) };
 			}
 			else
 			{
@@ -58,9 +58,9 @@ namespace RangeClass
 
 		public Range[] Subtraction(Range rangeTwo)
 		{
-			if (To < rangeTwo.From || To < rangeTwo.From)
+			if (To < rangeTwo.From || rangeTwo.To < From)
 			{
-				return new Range[] { this, rangeTwo };
+				return new Range[] { new Range(From, To), new Range(rangeTwo.From, rangeTwo.To) };
 			}
 			else
 			{
