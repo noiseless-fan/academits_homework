@@ -12,7 +12,7 @@ namespace RangeClass
 		{
 			public static void Main()
 			{
-				Range first = new Range(1, 2);
+				Range first = new Range(1, 3);
 				Range second = new Range(3, 6);
 
 				Console.WriteLine("Исходные диапазоны -------------------------------");
@@ -35,7 +35,7 @@ namespace RangeClass
 
 				Console.WriteLine("Тестируем сложение -------------------------------");
 
-				Range[] addictTest = Range.Addition(first, second);
+				Range[] addictTest = first.Addition(second);
 
 				foreach (Range range in addictTest)
 				{
@@ -44,7 +44,7 @@ namespace RangeClass
 
 				Console.WriteLine("Тестируем вычитание -------------------------------");
 
-				Range[] subtractionTest = Range.Subtraction(first, second);
+				Range[] subtractionTest = first.Subtraction(second);
 
 				foreach (Range range in subtractionTest)
 				{

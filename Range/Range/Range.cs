@@ -64,8 +64,8 @@ namespace RangeClass
 			}
 			else
 			{
-				double newFrom = Math.Max(From, rangeTwo.From);//rng_fst.From >= rng_sec.From ? rng_fst.From : rng_sec.From; 
-				double newTo = Math.Min(To, rangeTwo.To);//rng_fst.To <= rng_sec.To ? rng_fst.To : rng_sec.To;
+				double newFrom = Math.Min(From, rangeTwo.From);//rng_fst.From >= rng_sec.From ? rng_fst.From : rng_sec.From; 
+				double newTo = Math.Max(From, rangeTwo.From);//rng_fst.To <= rng_sec.To ? rng_fst.To : rng_sec.To;
 
 				return new Range[] { new Range(newFrom, newTo) };
 			}
