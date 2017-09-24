@@ -25,7 +25,7 @@ namespace HomeWork_Lyulyaev
 
 		public void Print()
 		{
-			Console.WriteLine(" от {0} до {1}", From, To);
+			Console.WriteLine(" {0}..{1} ", From, To);
 		}
 
 		public Range Cross(Range second) //don't forget a null-check then using
@@ -64,14 +64,30 @@ namespace HomeWork_Lyulyaev
 			}
 			else
 			{
-				if (rangeTwo.To > To)
+				if (From == rangeTwo.From)
 				{
-
+					if (To <= rangeTwo.To)
+					{
+						return null;
+					}
+					return new Range[] { new Range(rangeTwo.To, To) };
 				}
-				double newFrom = Math.Min(From, rangeTwo.From);
-				double newTo = Math.Max(From, rangeTwo.From);
-
-				return new Range[] { new Range(newFrom, newTo) };
+				else if (From > rangeTwo.From)
+				{
+					if (rangeTwo.To >= To)
+					{
+						return null;
+					}
+					return new Range[] { new Range(rangeTwo.To, To) };
+				}
+				else
+				{
+					if (To <= rangeTwo.To)
+					{
+						return new Range[] { new Range(From, rangeTwo.From) };
+					}
+					return new Range[] { new Range(From, rangeTwo.From), new Range(rangeTwo.To, To) };
+				}
 			}
 		}
 	}
