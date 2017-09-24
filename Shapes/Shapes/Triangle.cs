@@ -91,7 +91,7 @@ namespace HomeWork_Lyulyaev
 
 		public override string ToString()
 		{
-			return this.ToString();
+			return base.ToString();
 		}
 	}
 }
