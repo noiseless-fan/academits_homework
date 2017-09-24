@@ -53,5 +53,45 @@ namespace HomeWork_Lyulyaev
 			return area;
 		}
 
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(obj, this))
+			{
+				return true;
+			}
+			if (ReferenceEquals(obj, null) || obj.GetType() != this.GetType())
+			{
+				return false;
+			}
+			Triangle compared = (Triangle)obj;
+
+			// TODO: мне не нравится сравнение. доделать
+			
+			double[] thisSides = { SideA, SideB, SideC };
+			double[] comparedSides = { compared.SideA, compared.SideB, compared.SideC };
+
+			Array.Sort(thisSides);
+			Array.Sort(comparedSides);
+
+			for (int i = 0; i < thisSides.Length; i++)
+			{
+				if (thisSides[i] != comparedSides[i])
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		public override int GetHashCode()
+		{
+			return 0;
+		}
+
+		public override string ToString()
+		{
+			return this.ToString();
+		}
 	}
 }

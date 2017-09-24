@@ -35,5 +35,30 @@ namespace HomeWork_Lyulyaev
 		{
 			return width * height;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(obj, this))
+			{
+				return true;
+			}
+			if (ReferenceEquals(obj, null) || obj.GetType() != this.GetType())
+			{
+				return false;
+			}
+			Rectangle compared = (Rectangle)obj;
+
+			return height == compared.height && width == compared.width;
+		}
+
+		public override int GetHashCode()
+		{
+			return 0;
+		}
+
+		public override string ToString()
+		{
+			return this.ToString();
+		}
 	}
 }
