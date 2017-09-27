@@ -47,7 +47,7 @@ namespace HomeWork_Lyulyaev
 			}
 			Circle compared = (Circle)obj;
 
-			return radius == compared.GetHeight() / 2;
+			return radius == compared.radius;
 		}
 
 		public override int GetHashCode()

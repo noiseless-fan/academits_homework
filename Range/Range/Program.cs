@@ -12,8 +12,8 @@ namespace HomeWork_Lyulyaev
 		{
 			public static void Main()
 			{
-				Range first = new Range(3, 4);
-				Range second = new Range(3, 5);
+				Range first = new Range(2, 5);
+				Range second = new Range(1, 5);
 
 				Console.WriteLine("Исходные диапазоны -------------------------------");
 
@@ -46,16 +46,9 @@ namespace HomeWork_Lyulyaev
 
 				Range[] subtractionTest = first.Subtraction(second);
 
-				if (subtractionTest == null)
+				foreach (Range range in subtractionTest)
 				{
-					Console.WriteLine("вычитаемый интервал полностью перекрывает исходный");
-				}
-				else
-				{
-					foreach (Range range in subtractionTest)
-					{
 						range.Print();
-					}
 				}
 
 				Console.ReadKey();

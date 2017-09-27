@@ -49,9 +49,9 @@ namespace HomeWork_Lyulyaev
 			}
 			else
 			{
-				double newFrom = Math.Min(From, rangeTwo.From); 
+				double newFrom = Math.Min(From, rangeTwo.From);
 				double newTo = Math.Max(To, rangeTwo.To);
-				
+
 				return new Range[] { new Range(newFrom, newTo) };
 			}
 		}
@@ -62,32 +62,22 @@ namespace HomeWork_Lyulyaev
 			{
 				return new Range[] { new Range(From, To), new Range(rangeTwo.From, rangeTwo.To) };
 			}
+
+			if (From >= rangeTwo.From)
+			{
+				if (To <= rangeTwo.To || rangeTwo.To >= To)
+				{
+					return new Range[] { this };
+				}
+				return new Range[] { new Range(rangeTwo.To, To) };
+			}
 			else
 			{
-				if (From == rangeTwo.From)
+				if (To <= rangeTwo.To)
 				{
-					if (To <= rangeTwo.To)
-					{
-						return null;
-					}
-					return new Range[] { new Range(rangeTwo.To, To) };
+					return new Range[] { new Range(From, rangeTwo.From) };
 				}
-				else if (From > rangeTwo.From)
-				{
-					if (rangeTwo.To >= To)
-					{
-						return null;
-					}
-					return new Range[] { new Range(rangeTwo.To, To) };
-				}
-				else
-				{
-					if (To <= rangeTwo.To)
-					{
-						return new Range[] { new Range(From, rangeTwo.From) };
-					}
-					return new Range[] { new Range(From, rangeTwo.From), new Range(rangeTwo.To, To) };
-				}
+				return new Range[] { new Range(From, rangeTwo.From), new Range(rangeTwo.To, To) };
 			}
 		}
 	}

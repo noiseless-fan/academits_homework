@@ -8,33 +8,33 @@ namespace HomeWork_Lyulyaev
 {
 	class Square: IShape
 	{
-		private const int Sides = 4;
-		private int Width;
-		private int Height;
+		private const int SIDES = 4;
+		private int width;
+		private int height;
 
 		public double GetWidth()
 		{
-			return Width;
+			return width;
 		}
 
 		public double GetHeight()
 		{
-			return Height;
+			return height;
 		}
 
 		public Square(int sideSize)
 		{
-			Width = Height = sideSize;
+			width = height = sideSize;
 		}
 
 		public double GetPerimeter()
 		{
-			return Height * Sides;
+			return height * SIDES;
 		}
 
 		public double GetArea()
 		{
-			return Math.Pow(Width, 2);
+			return Math.Pow(width, 2);
 		}
 
 		public override bool Equals(object obj)
@@ -49,7 +49,7 @@ namespace HomeWork_Lyulyaev
 			}
 			Square compared = (Square)obj;
 
-			return compared.Height == Height;
+			return compared.height == height;
 		}
 
 		public override int GetHashCode()

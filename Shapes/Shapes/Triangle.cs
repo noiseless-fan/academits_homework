@@ -8,25 +8,30 @@ namespace HomeWork_Lyulyaev
 {
 	class Triangle: IShape
 	{
-		private int X1, X2, X3, Y1, Y2, Y3;
+		private int x1,
+					x2,
+					x3,
+					y1,
+					y2,
+					y3;
 
-		public double SideA { get { return Math.Sqrt(Math.Pow(X2 - X1, 2) + Math.Pow(Y2 - Y1, 2)); } }
-		public double SideB { get { return Math.Sqrt(Math.Pow(X3 - X1, 2) + Math.Pow(Y3 - Y1, 2)); } }
-		public double SideC { get { return Math.Sqrt(Math.Pow(X3 - X2, 2) + Math.Pow(Y3 - Y2, 2)); } }
+		public double sideA { get { return SideCompute(x1, y1, x2, y2); } }
+		public double sideB { get { return SideCompute(x1, y1, x3, y3); } }
+		public double sideC { get { return SideCompute(x2, y2, x3, y3); } }
 
 		public Triangle(int x1, int y1, int x2, int y2, int x3, int y3)
 		{
-			X1 = x1;
-			X2 = x2;
-			X3 = x3;
-			Y1 = y1;
-			Y2 = y2;
-			Y3 = y3;
+			this.x1 = x1;
+			this.x2 = x2;
+			this.x3 = x3;
+			this.y1 = y1;
+			this.y2 = y2;
+			this.y3 = y3;
 		}
 
 		public double GetWidth()
 		{
-			int[] minmax = { X1, X2, X3 };
+			int[] minmax = { x1, x2, x3 };
 			Array.Sort(minmax);
 
 			return minmax[minmax.Length - 1] - minmax[0];
@@ -34,7 +39,7 @@ namespace HomeWork_Lyulyaev
 
 		public double GetHeight()
 		{
-			int[] minmax = { Y1, Y2, Y3 };
+			int[] minmax = { y1, y2, y3 };
 			Array.Sort(minmax);
 
 			return minmax[minmax.Length - 1] - minmax[0];
@@ -42,13 +47,13 @@ namespace HomeWork_Lyulyaev
 
 		public double GetPerimeter()
 		{
-			return SideA + SideB + SideC;
+			return sideA + sideB + sideC;
 		}
 
 		public double GetArea()
 		{
 			double halfPerimeter = GetPerimeter() / 2;
-			double area = Math.Sqrt(halfPerimeter * (halfPerimeter - SideA) * (halfPerimeter - SideB) * (halfPerimeter - SideC));
+			double area = Math.Sqrt(halfPerimeter * (halfPerimeter - sideA) * (halfPerimeter - sideB) * (halfPerimeter - sideC));
 
 			return area;
 		}
@@ -65,23 +70,9 @@ namespace HomeWork_Lyulyaev
 			}
 			Triangle compared = (Triangle)obj;
 
-			// TODO: мне не нравится сравнение. доделать
-			
-			double[] thisSides = { SideA, SideB, SideC };
-			double[] comparedSides = { compared.SideA, compared.SideB, compared.SideC };
-
-			Array.Sort(thisSides);
-			Array.Sort(comparedSides);
-
-			for (int i = 0; i < thisSides.Length; i++)
-			{
-				if (thisSides[i] != comparedSides[i])
-				{
-					return false;
-				}
-			}
-
-			return true;
+			return	(x1 == compared.x1 && y1 == compared.y1) 
+					&& (x2 == compared.x2 && y2 == compared.y2) 
+					&& (x3 == compared.x3 && y3 == compared.y3);
 		}
 
 		public override int GetHashCode()
@@ -92,6 +83,11 @@ namespace HomeWork_Lyulyaev
 		public override string ToString()
 		{
 			return base.ToString();
+		}
+
+		private static double SideCompute(double x1, double y1, double x2, double y2)
+		{
+			return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
 		}
 	}
 }
