@@ -8,21 +8,6 @@ namespace HomeWork_Lyulyaev
 {
 	class Program
 	{
-		public static void MaxArea(params IShape[] shapes)
-		{
-			int maxIndex = 0;
-			for (int i = 0; i < shapes.Length; i++)
-			{
-				maxIndex = shapes[i].GetArea() > shapes[maxIndex].GetArea() ? i : maxIndex;
-			}
-			Console.WriteLine(shapes[maxIndex]);
-		}
-
-		public static void SecondPerimeter(params IShape[] shapes)
-		{
-			
-		}
-
 		public static void Main(String[] args)
 		{
 			IShape circle = new Circle(5);
@@ -43,9 +28,6 @@ namespace HomeWork_Lyulyaev
 
 			Console.WriteLine("Максимальная площадь - {0}, {1}", shapes[shapes.Length - 1].ToString(), shapes[shapes.Length - 1].GetArea());
 			Console.WriteLine("Второй по величине периметр - {0}, {1}", shapes[shapes.Length - 2].ToString(), shapes[shapes.Length - 2].GetPerimeter());
-
-			//MaxArea(circle, circle2, triangle, square, rectangle);
-			//SecondPerimeter(circle, circle2, triangle, square, rectangle);
 
 			Console.ReadKey();
 		}
