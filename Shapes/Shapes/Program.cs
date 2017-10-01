@@ -31,8 +31,21 @@ namespace HomeWork_Lyulyaev
 			IShape rectangle = new Rectangle(2, 7);
 			IShape circle2 = new Circle(4);
 
-			MaxArea(circle, circle2, triangle, square, rectangle);
-			SecondPerimeter(circle, circle2, triangle, square, rectangle);
+			IShape[] shapes = { circle, triangle, square, rectangle, circle2 };
+
+			Array.Sort<IShape>(shapes);
+
+			for (int i = 0; i < shapes.Length; i++)
+			{
+				Console.WriteLine("Area {0}, perimeter {1}", shapes[i].GetArea(), shapes[i].GetPerimeter());
+
+			}
+
+			Console.WriteLine("Максимальная площадь - {0}, {1}", shapes[shapes.Length - 1].ToString(), shapes[shapes.Length - 1].GetArea());
+			Console.WriteLine("Второй по величине периметр - {0}, {1}", shapes[shapes.Length - 2].ToString(), shapes[shapes.Length - 2].GetPerimeter());
+
+			//MaxArea(circle, circle2, triangle, square, rectangle);
+			//SecondPerimeter(circle, circle2, triangle, square, rectangle);
 
 			Console.ReadKey();
 		}

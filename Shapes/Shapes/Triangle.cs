@@ -77,7 +77,17 @@ namespace HomeWork_Lyulyaev
 
 		public override int GetHashCode()
 		{
-			return 0;
+			int prime = 7;
+			int hash = 1;
+
+			int[] coords = { x1, y1, x2, y2, x3, y3 };
+
+			for (int i = 0; i < coords.Length; i++)
+			{
+				hash = hash * coords[i] + prime;
+			}
+
+			return hash;
 		}
 
 		public override string ToString()
@@ -88,6 +98,42 @@ namespace HomeWork_Lyulyaev
 		private static double SideCompute(double x1, double y1, double x2, double y2)
 		{
 			return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+		}
+
+		public int CompareTo(object obj)
+		{
+			if (obj.GetType() is IShape)
+			{
+				return -1;
+			}
+
+			IShape shape = (IShape)obj;
+
+			if (this == null && shape != null)
+			{
+				return -1;
+			}
+			if (shape == null && this != null)
+			{
+				return 1;
+			}
+			if (this == null && shape == null)
+			{
+				return 0;
+			}
+
+			int thisArea = (int)this.GetArea();
+			int shapeArea = (int)shape.GetArea();
+
+			if (thisArea > shapeArea)
+			{
+				return 1;
+			}
+			else if (thisArea == shapeArea)
+			{
+				return 0;
+			}
+			return -1;
 		}
 	}
 }
