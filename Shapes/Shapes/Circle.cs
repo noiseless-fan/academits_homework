@@ -10,6 +10,11 @@ namespace HomeWork_Lyulyaev
 	{
 		private int radius;
 
+		public Circle(int radius)
+		{
+			this.radius = radius;
+		}
+
 		public double GetWidth()
 		{
 			return radius * 2;
@@ -18,11 +23,6 @@ namespace HomeWork_Lyulyaev
 		public double GetHeight()
 		{
 			return radius * 2;
-		}
-
-		public Circle(int radius)
-		{
-			this.radius = radius;
 		}
 
 		public double GetPerimeter()

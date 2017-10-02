@@ -12,6 +12,11 @@ namespace HomeWork_Lyulyaev
 		private int width;
 		private int height;
 
+		public Square(int sideSize)
+		{
+			width = height = sideSize;
+		}
+
 		public double GetWidth()
 		{
 			return width;
@@ -20,11 +25,6 @@ namespace HomeWork_Lyulyaev
 		public double GetHeight()
 		{
 			return height;
-		}
-
-		public Square(int sideSize)
-		{
-			width = height = sideSize;
 		}
 
 		public double GetPerimeter()

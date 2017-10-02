@@ -11,6 +11,12 @@ namespace HomeWork_Lyulyaev
 		private int height;
 		private int width;
 
+		public Rectangle(int height, int width)
+		{
+			this.height = height;
+			this.width = width;
+		}
+
 		public double GetHeight()
 		{
 			return height;
@@ -19,12 +25,6 @@ namespace HomeWork_Lyulyaev
 		public double GetWidth()
 		{
 			return width;
-		}
-
-		public Rectangle(int height, int width)
-		{
-			this.height = height;
-			this.width = width;
 		}
 
 		public double GetPerimeter()
