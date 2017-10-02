@@ -36,6 +36,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Circle.cs" />
+    <Compile Include="ShapePerimeterComparer.cs" />
+    <Compile Include="ShapeAreaComparer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Triangle.cs" />

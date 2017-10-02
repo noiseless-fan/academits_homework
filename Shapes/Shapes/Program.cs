@@ -18,16 +18,16 @@ namespace HomeWork_Lyulyaev
 
 			IShape[] shapes = { circle, triangle, square, rectangle, circle2 };
 
-			Array.Sort<IShape>(shapes);
-
 			for (int i = 0; i < shapes.Length; i++)
 			{
-				Console.WriteLine("Area {0}, perimeter {1}", shapes[i].GetArea(), shapes[i].GetPerimeter());
-
+				Console.WriteLine("{0}", shapes[i].ToString());
 			}
 
-			Console.WriteLine("Максимальная площадь - {0}, {1}", shapes[shapes.Length - 1].ToString(), shapes[shapes.Length - 1].GetArea());
-			Console.WriteLine("Второй по величине периметр - {0}, {1}", shapes[shapes.Length - 2].ToString(), shapes[shapes.Length - 2].GetPerimeter());
+			Array.Sort(shapes, new ShapeAreaComparer());
+			Console.WriteLine("Максимальная площадь - {0}", shapes[shapes.Length - 1].ToString());
+
+			Array.Sort(shapes, new ShapePerimeterComparer());
+			Console.WriteLine("Второй по величине периметр - {0}", shapes[shapes.Length - 2].ToString());
 
 			Console.ReadKey();
 		}

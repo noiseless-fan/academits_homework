@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeWork_Lyulyaev
 {
-	interface IShape : IComparable
+	public interface IShape
 	{
 		double GetWidth();
 		double GetHeight();

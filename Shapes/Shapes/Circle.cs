@@ -62,43 +62,7 @@ namespace HomeWork_Lyulyaev
 
 		public override string ToString()
 		{
-			return base.ToString();
-		}
-
-		public int CompareTo(object obj)
-		{
-			if (obj.GetType() is IShape)
-			{
-				return -1;
-			}
-
-			IShape shape = (IShape)obj;
-
-			if (this == null && shape != null)
-			{
-				return -1;
-			}
-			if (shape == null && this != null)
-			{
-				return 1;
-			}
-			if (this == null && shape == null)
-			{
-				return 0;
-			}
-
-			int thisArea = (int)this.GetArea();
-			int shapeArea = (int)shape.GetArea();
-
-			if (thisArea > shapeArea)
-			{
-				return 1;
-			}
-			else if (thisArea == shapeArea)
-			{
-				return 0;
-			}
-			return -1;
+			return $"{GetType().Name}, with radius {radius}";
 		}
 	}
 }
