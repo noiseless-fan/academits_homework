@@ -28,6 +28,11 @@ namespace HomeWork_Lyulyaev
 			Console.WriteLine(" {0}..{1} ", From, To);
 		}
 
+		public override string ToString()
+		{
+			return String.Format(" {0}..{1}", From, To);
+		}
+
 		public Range Cross(Range second) //don't forget a null-check then using
 		{
 			if (To <= second.From || second.To <= From)
@@ -60,14 +65,14 @@ namespace HomeWork_Lyulyaev
 		{
 			if (To < rangeTwo.From || rangeTwo.To < From)
 			{
-				return new Range[] { new Range(From, To), new Range(rangeTwo.From, rangeTwo.To) };
+				return new Range[] { this };
 			}
 
 			if (From >= rangeTwo.From)
 			{
-				if (To <= rangeTwo.To || rangeTwo.To >= To)
+				if (To <= rangeTwo.To)
 				{
-					return new Range[] { this };
+					return new Range[] { };
 				}
 				return new Range[] { new Range(rangeTwo.To, To) };
 			}

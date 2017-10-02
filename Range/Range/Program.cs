@@ -12,8 +12,8 @@ namespace HomeWork_Lyulyaev
 		{
 			public static void Main()
 			{
-				Range first = new Range(2, 5);
-				Range second = new Range(1, 5);
+				Range first = new Range(2, 3);
+				Range second = new Range(1, 4);
 
 				Console.WriteLine("Исходные диапазоны -------------------------------");
 
@@ -44,13 +44,34 @@ namespace HomeWork_Lyulyaev
 
 				Console.WriteLine("Тестируем вычитание -------------------------------");
 
-				Range[] subtractionTest = first.Subtraction(second);
+				Range[] test = { new Range(1, 2), new Range(2, 3), new Range(3, 4), new Range(1, 4) };
 
-				foreach (Range range in subtractionTest)
+				for (int i = 1; i < test.Length; i++)
 				{
-						range.Print();
-				}
+					Console.Write(" {0} - {1} = ", test[i].ToString(), test[i - 1].ToString());
 
+					Range[] subsTest = test[i].Subtraction(test[i - 1]);
+					if (subsTest.Length == 0)
+					{
+						Console.WriteLine("Пустой массив.");
+					}
+					foreach (Range range in subsTest)
+					{
+						range.Print();
+					}
+
+					Console.Write(" {0} - {1} = ", test[i - 1].ToString(), test[i].ToString());
+
+					subsTest = test[i - 1].Subtraction(test[i]);
+					if (subsTest.Length == 0)
+					{
+						Console.WriteLine("Пустой массив.");
+					}
+					foreach (Range range in subsTest)
+					{
+						range.Print();
+					}
+				}
 				Console.ReadKey();
 			}
 		}
