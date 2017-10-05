@@ -62,7 +62,7 @@ namespace HomeWork_Lyulyaev
 
 		public override string ToString()
 		{
-			return $"{GetType().Name}, with sides of {width}";
+			return $"{nameof(Square)}, with sides of {width}";
 		}
 	}
 }

@@ -24,7 +24,7 @@ namespace HomeWork_Lyulyaev
 				return 0;
 			}
 			
-			return (int)(sh1.GetArea() - sh2.GetArea());
+			return sh1.GetArea().CompareTo(sh2.GetArea());
 		}
 	}
 }

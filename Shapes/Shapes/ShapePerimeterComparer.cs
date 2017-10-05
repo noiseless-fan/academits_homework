@@ -24,7 +24,7 @@ namespace HomeWork_Lyulyaev
 				return 0;
 			}
 
-			return (int)(sh1.GetPerimeter() - sh2.GetPerimeter());
+			return sh1.GetPerimeter().CompareTo(sh2.GetPerimeter());
 		}
 	}
 }

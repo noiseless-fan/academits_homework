@@ -92,7 +92,7 @@ namespace HomeWork_Lyulyaev
 
 		public override string ToString()
 		{
-			return $"{GetType().Name}, no need to write all the coordinates here..i think..";
+			return $"{nameof(Triangle)}, no need to write all the coordinates here..i think..";
 		}
 
 		private static double SideCompute(double x1, double y1, double x2, double y2)
