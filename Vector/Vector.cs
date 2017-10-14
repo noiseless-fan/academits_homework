@@ -8,145 +8,142 @@ namespace HomeWork_Lyulyaev
 {
 	class Vector
 	{
-		private double[] body;
+		private double[] elements;
+
+		public int Length { get { return elements.Length; } }
+
+		public double Module
+		{
+			get
+			{
+				double sumSquare = 0;
+
+				for(int i = 0; i < elements.Length; i++)
+				{
+					sumSquare += Math.Pow(elements[i], 2); 
+				}
+
+				return Math.Sqrt(sumSquare);
+			}
+		}
+
+		//индексатор
+		[System.Runtime.CompilerServices.IndexerName("element")]
+		public double this[int i]
+		{
+			get => elements[CheckBorders(i, Length)];
+			set => elements[CheckBorders(i, Length)] = value; 
+		}
 
 		//конструкторы -------------------------------------------
 		public Vector(int n)
 		{
-			body = new double[CheckSize(n)];
+			elements = new double[CheckSize(n)];
 		}
 
 		public Vector(Vector initial)
 		{
-			body = new double[initial.body.Length];
+			elements = new double[initial.Length];
 
-			for (int i = 0; i < body.Length; i++)
-			{
-				body[i] = initial.body[i];
-			}
+			Array.Copy(initial.elements, elements, Length);
 		}
 
 		public Vector(double[] arr)
 		{
-			body = new double[arr.Length];
+			elements = new double[CheckSize(arr.Length)];
 
-			for (int i = 0; i < body.Length; i++)
-			{
-				body[i] = arr[i];
-			}
+			Array.Copy(arr, elements, Length);
 		}
 
 		public Vector(int n, double[] arr)
 		{
-			body = new double[CheckSize(n)];
+			elements = new double[CheckSize(n)];
 
-			for (int i = 0; i < arr.Length && i < body.Length; i++)
-			{
-				body[i] = arr[i];
-			}
+			Array.Copy(arr, elements, n < arr.Length ? n : arr.Length);
 		}
 
 		//нестатические методы ---------------------------------------------------------
 
 		//vec + vec
-		public void Addition(Vector add)
+		public Vector Addition(Vector add)
 		{
-			for (int i = 0; i < Math.Min(this.body.Length, add.body.Length); i++)
+			Vector result = new Vector(Math.Max(Length, add.Length));
+
+			Array.Copy(elements, result.elements, result.Length < Length ? result.Length : Length);
+
+			for (int i = 0; i < result.Length; i++)
 			{
-				this.body[i] = this.body[i] + add.body[i];
+				result[i] += add[i];
 			}
+			return result;
 		}
 
 		//vec - vec
-		public void Subtraction(Vector sub)
+		public Vector Subtraction(Vector sub)
 		{
-			for (int i = 0; i < Math.Min(this.body.Length, sub.body.Length); i++)
+			Vector result = new Vector(Math.Max(Length, sub.Length));
+
+			Array.Copy(elements, result.elements, result.Length < Length ? result.Length : Length);
+
+			for (int i = 0; i < result.Length; i++)
 			{
-				this.body[i] = this.body[i] - sub.body[i];
+				result[i] -= sub[i];
 			}
+			return result;
 		}
 
 		//vec * num
 		public void MultiplyByScalar(double scalar)
 		{
-			for (int i = 0; i < body.Length; i++)
+			for (int i = 0; i < Length; i++)
 			{
-				body[i] = body[i] * scalar;
+				elements[i] *= scalar;
 			}
 		}
 
 		//vec * -1
 		public void Reverse()
 		{
-			for (int i = 0; i < body.Length; i++)
-			{
-				body[i] = -body[i];
-			}
-		}
-
-		//length
-		public int GetSize()
-		{
-			return body.Length;
-		}
-		
-		//get;
-		public void SetValue(int idx, double value)
-		{
-			if (idx < 0 || idx > body.Length)
-			{
-				throw new ArgumentOutOfRangeException(nameof(idx), idx, "incorrect index");
-			}
-			body[idx] = value;
-		}
-		//set
-		public double GetValue(int idx)
-		{
-			if (idx < 0 || idx > body.Length)
-			{
-				throw new ArgumentOutOfRangeException(nameof(idx), idx, "incorrect index");
-			}
-			return body[idx];
+			MultiplyByScalar(-1.0);
 		}
 
 		//Статические методы ------------------------------------------------------------
+		//проверка границ и размерности.
 		private static int CheckSize(int number)
 		{
 			return number > 0 ? number : throw new ArgumentOutOfRangeException(nameof(number),"n <= 0");
 		}
 
+		private static int CheckBorders(int number, int length)
+		{
+			if (number >= 0 && number < length)
+			{
+				return number;
+			}
+			throw new ArgumentOutOfRangeException(nameof(number), "out of array borders");
+		}
+
 		//vec + vec
 		public static Vector Addition(Vector first, Vector second)
 		{
-			Vector result = new Vector(Math.Max(first.body.Length, second.body.Length));
-
-			for (int i = 0; i < Math.Min(first.body.Length, second.body.Length); i++)
-			{
-				result.body[i] = first.body[i] + second.body[i];
-			}
-			return result;
+			return first.Length > second.Length ? new Vector(first).Addition(second) : new Vector(second).Addition(first);
 		}
 
 		//vec - vec
 		public static Vector Subtraction(Vector first, Vector second)
 		{
-			Vector result = new Vector(Math.Max(first.body.Length, second.body.Length));
-
-			for (int i = 0; i < Math.Min(first.body.Length, second.body.Length); i++)
-			{
-				result.body[i] = first.body[i] + second.body[i];
-			}
-			return result;
+			return first.Length > second.Length ? new Vector(first).Subtraction(second) : new Vector(second).Subtraction(first);
 		}
 
 		//scalar (vec * vec)
-		public static double Multiply(Vector first, Vector second)
+		public static double Composition(Vector first, Vector second)
 		{
 			double result = 0;
 
-			for (int i = 0; i < Math.Min(first.body.Length, second.body.Length); i++)
+			int iterator = Math.Min(first.Length, second.Length);
+			for (int i = 0; i < iterator; i++)
 			{
-				result += first.body[i] * second.body[i];
+				result += first[i] * second[i];
 			}
 			return result;
 		}
@@ -163,13 +160,13 @@ namespace HomeWork_Lyulyaev
 				return false;
 			}
 
-			Vector comparable = (Vector)obj;
+			Vector comparable = obj as Vector;
 
-			if (body.Length == comparable.body.Length)
+			if (Length == comparable.Length)
 			{
-				for (int i = 0; i < body.Length; i++)
+				for (int i = 0; i < Length; i++)
 				{
-					if (body[i].CompareTo(comparable.body[i]) != 0)
+					if (elements[i] != comparable[i])
 					{
 						return false;
 					}
@@ -184,9 +181,9 @@ namespace HomeWork_Lyulyaev
 			int prime = 7;
 			int hash = 0;
 
-			for (int i = 0; i < body.Length; i++)
+			for (int i = 0; i < Length; i++)
 			{
-				hash = (int)(body[i] % prime + hash % i);
+				hash = (int)(elements[i] % prime + hash % i);
 			}
 
 			return hash;
@@ -195,7 +192,7 @@ namespace HomeWork_Lyulyaev
 		public override string ToString()
 		{
 			return new StringBuilder().Append("{ ")
-									  .Append(string.Join(",", body))
+									  .Append(string.Join(",", elements))
 									  .Append(" }").ToString();
 		}
 	}
