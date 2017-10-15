@@ -10,19 +10,20 @@ namespace HomeWork_Lyulyaev
 	{
 		private double[] elements;
 
-		public int Length { get { return elements.Length; } }
+		public int Length
+		{
+			get => elements.Length;
+		}
 
 		public double Module
 		{
 			get
 			{
 				double sumSquare = 0;
-
-				for(int i = 0; i < elements.Length; i++)
+				foreach (double element in elements)
 				{
-					sumSquare += Math.Pow(elements[i], 2); 
+					sumSquare += Math.Pow(element, 2); 
 				}
-
 				return Math.Sqrt(sumSquare);
 			}
 		}
@@ -67,29 +68,33 @@ namespace HomeWork_Lyulyaev
 		//vec + vec
 		public Vector Addition(Vector add)
 		{
-			Vector result = new Vector(Math.Max(Length, add.Length));
+			double[] result = new double[Math.Max(Length, add.Length)];
 
-			Array.Copy(elements, result.elements, result.Length < Length ? result.Length : Length);
+			Array.Copy(elements, result, Math.Min(result.Length, Length));
 
 			for (int i = 0; i < result.Length; i++)
 			{
 				result[i] += add[i];
 			}
-			return result;
+			elements = result;
+
+			return this;
 		}
 
 		//vec - vec
 		public Vector Subtraction(Vector sub)
 		{
-			Vector result = new Vector(Math.Max(Length, sub.Length));
+			double[] result = new double[Math.Max(Length, sub.Length)];
 
-			Array.Copy(elements, result.elements, result.Length < Length ? result.Length : Length);
+			Array.Copy(elements, result, Math.Min(result.Length, Length));
 
 			for (int i = 0; i < result.Length; i++)
 			{
 				result[i] -= sub[i];
 			}
-			return result;
+			elements = result;
+
+			return this;
 		}
 
 		//vec * num
@@ -126,13 +131,13 @@ namespace HomeWork_Lyulyaev
 		//vec + vec
 		public static Vector Addition(Vector first, Vector second)
 		{
-			return first.Length > second.Length ? new Vector(first).Addition(second) : new Vector(second).Addition(first);
+			return new Vector(first).Addition(second);
 		}
 
 		//vec - vec
 		public static Vector Subtraction(Vector first, Vector second)
 		{
-			return first.Length > second.Length ? new Vector(first).Subtraction(second) : new Vector(second).Subtraction(first);
+			return new Vector(first).Subtraction(second);
 		}
 
 		//scalar (vec * vec)
