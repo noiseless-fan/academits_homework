@@ -30,7 +30,7 @@ namespace HomeWork_Lyulyaev
 
 		public override string ToString()
 		{
-			return String.Format(" {0}..{1}", From, To);
+			return string.Format(" {0}..{1}", From, To);
 		}
 
 		public Range Cross(Range second) //don't forget a null-check then using
@@ -63,9 +63,9 @@ namespace HomeWork_Lyulyaev
 
 		public Range[] Subtraction(Range rangeTwo)
 		{
-			if (To < rangeTwo.From || rangeTwo.To < From)
+			if (To <= rangeTwo.From || rangeTwo.To <= From)
 			{
-				return new Range[] { this };
+				return new Range[] { new Range(From, To) };
 			}
 
 			if (From >= rangeTwo.From)
