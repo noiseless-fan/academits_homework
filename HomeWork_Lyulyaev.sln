@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vector", "Vector\Vector.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "listtest", "listtest\listtest.csproj", "{D2B52CBB-6D10-42FB-9374-6607A5AC6E36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMatrix", "MyMatrix\MyMatrix.csproj", "{717B7691-F5CD-41B4-92AE-A9DFA1BDA312}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D2B52CBB-6D10-42FB-9374-6607A5AC6E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2B52CBB-6D10-42FB-9374-6607A5AC6E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2B52CBB-6D10-42FB-9374-6607A5AC6E36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717B7691-F5CD-41B4-92AE-A9DFA1BDA312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717B7691-F5CD-41B4-92AE-A9DFA1BDA312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717B7691-F5CD-41B4-92AE-A9DFA1BDA312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717B7691-F5CD-41B4-92AE-A9DFA1BDA312}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
