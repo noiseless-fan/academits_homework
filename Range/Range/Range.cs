@@ -48,17 +48,15 @@ namespace HomeWork_Lyulyaev
 
 		public Range[] Addition(Range rangeTwo)
 		{
-			if (To < rangeTwo.From || rangeTwo.To < From)
+			if (To <= rangeTwo.From || rangeTwo.To <= From)
 			{
 				return new Range[] { new Range(From, To), new Range(rangeTwo.From, rangeTwo.To) };
 			}
-			else
-			{
-				double newFrom = Math.Min(From, rangeTwo.From);
-				double newTo = Math.Max(To, rangeTwo.To);
 
-				return new Range[] { new Range(newFrom, newTo) };
-			}
+			double newFrom = Math.Min(From, rangeTwo.From);
+			double newTo = Math.Max(To, rangeTwo.To);
+
+			return new Range[] { new Range(newFrom, newTo) };
 		}
 
 		public Range[] Subtraction(Range rangeTwo)
@@ -68,17 +66,17 @@ namespace HomeWork_Lyulyaev
 				return new Range[] { new Range(From, To) };
 			}
 
-			if (From >= rangeTwo.From)
+			if (From > rangeTwo.From)
 			{
 				if (To <= rangeTwo.To)
 				{
-					return new Range[] { };
+					return new Range[0];
 				}
 				return new Range[] { new Range(rangeTwo.To, To) };
 			}
 			else
 			{
-				if (To <= rangeTwo.To)
+				if (To < rangeTwo.To)
 				{
 					return new Range[] { new Range(From, rangeTwo.From) };
 				}
