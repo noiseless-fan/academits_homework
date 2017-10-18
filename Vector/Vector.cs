@@ -10,11 +10,8 @@ namespace HomeWork_Lyulyaev
 	{
 		private double[] elements;
 
-		public int Length
-		{
-			get => elements.Length;
-		}
-
+		public int Length => elements.Length;
+		
 		public double Module
 		{
 			get
@@ -60,7 +57,7 @@ namespace HomeWork_Lyulyaev
 		{
 			elements = new double[CheckSize(n)];
 
-			Array.Copy(arr, elements, n < arr.Length ? n : arr.Length);
+			Array.Copy(arr, elements, Math.Min(arr.Length, n));
 		}
 
 		//нестатические методы ---------------------------------------------------------
@@ -68,32 +65,44 @@ namespace HomeWork_Lyulyaev
 		//vec + vec
 		public Vector Addition(Vector add)
 		{
-			double[] result = new double[Math.Max(Length, add.Length)];
+			if (add.Length <= Length)
+			{
+				for (int i = 0; i < add.Length; i++)
+				{
+					this[i] += add[i];
+				}
+				return this;
+			}
 
-			Array.Copy(elements, result, Math.Min(result.Length, Length));
-
-			for (int i = 0; i < result.Length; i++)
+			double[] result = new double[add.Length];
+			Array.Copy(elements, result, Length);
+			for (int i = 0; i < add.Length; i++)
 			{
 				result[i] += add[i];
 			}
 			elements = result;
-
 			return this;
 		}
 
 		//vec - vec
 		public Vector Subtraction(Vector sub)
 		{
-			double[] result = new double[Math.Max(Length, sub.Length)];
+			if (sub.Length <= Length)
+			{
+				for (int i = 0; i < sub.Length; i++)
+				{
+					this[i] -= sub[i];
+				}
+				return this;
+			}
 
-			Array.Copy(elements, result, Math.Min(result.Length, Length));
-
-			for (int i = 0; i < result.Length; i++)
+			double[] result = new double[sub.Length];
+			Array.Copy(elements, result, Length);
+			for (int i = 0; i < sub.Length; i++)
 			{
 				result[i] -= sub[i];
 			}
 			elements = result;
-
 			return this;
 		}
 
