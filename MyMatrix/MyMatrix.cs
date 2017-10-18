@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyMatrix
+namespace HomeWork_Lyulyaev
 {
-	class MyMatrix
+	public class MyMatrix
 	{
+		
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeWork_Lyulyaev
 {
-	class Vector
+	public class Vector
 	{
 		private double[] elements;
 

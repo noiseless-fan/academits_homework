@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeWork_Lyulyaev
 {
-	class Program
+	public class Program
 	{
 		public class RangeUsing
 		{
