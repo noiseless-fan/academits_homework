@@ -205,9 +205,9 @@ namespace HomeWork_Lyulyaev
 
 		public override string ToString()
 		{
-			return new StringBuilder().Append("{ ")
-									  .Append(string.Join(",", elements))
-									  .Append(" }").ToString();
+			return new StringBuilder().Append("{\t")
+									  .Append(string.Join(",\t", elements))
+									  .Append("\t}").ToString();
 		}
 	}
 }
