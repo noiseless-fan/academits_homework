@@ -12,8 +12,8 @@ namespace HomeWork_Lyulyaev
 		{
 			public static void Main()
 			{
-				Range first = new Range(2, 3);
-				Range second = new Range(1, 4);
+				Range first = new Range(1, 2);
+				Range second = new Range(1, 2);
 
 				Console.WriteLine("Исходные диапазоны -------------------------------");
 
@@ -44,7 +44,7 @@ namespace HomeWork_Lyulyaev
 
 				Console.WriteLine("Тестируем вычитание -------------------------------");
 
-				Range[] test = { new Range(1, 2), new Range(2, 3), new Range(3, 4), new Range(1, 4) };
+				Range[] test = { new Range(1, 2), new Range(1, 3), new Range(3, 4), new Range(1, 4) };
 
 				for (int i = 1; i < test.Length; i++)
 				{

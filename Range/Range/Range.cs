@@ -48,7 +48,7 @@ namespace HomeWork_Lyulyaev
 
 		public Range[] Addition(Range rangeTwo)
 		{
-			if (To <= rangeTwo.From || rangeTwo.To <= From)
+			if (To < rangeTwo.From || rangeTwo.To < From)
 			{
 				return new Range[] { new Range(From, To), new Range(rangeTwo.From, rangeTwo.To) };
 			}
@@ -66,7 +66,7 @@ namespace HomeWork_Lyulyaev
 				return new Range[] { new Range(From, To) };
 			}
 
-			if (From > rangeTwo.From)
+			if (From >= rangeTwo.From)
 			{
 				if (To <= rangeTwo.To)
 				{
@@ -76,7 +76,7 @@ namespace HomeWork_Lyulyaev
 			}
 			else
 			{
-				if (To < rangeTwo.To)
+				if (To <= rangeTwo.To)
 				{
 					return new Range[] { new Range(From, rangeTwo.From) };
 				}
