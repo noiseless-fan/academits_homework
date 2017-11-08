@@ -71,7 +71,7 @@ namespace HomeWork_Lyulyaev
 		//c.	Matrix(double[][]) – из двумерного массива
 		public MyMatrix(double[][] arr)
 		{
-			if (arr.Rank != 2 || arr.Length == 0 || arr == null)
+			if (arr.Rank < 1 || arr.Length == 0 || arr == null)
 			{
 				throw new ArgumentException(nameof(arr), "недопустимый массив для копирования.");
 			}
@@ -104,6 +104,7 @@ namespace HomeWork_Lyulyaev
 			{
 				column[i] = this[i, index];
 			}
+			column.IsColumn = true;
 			return column;
 		}
 		//d.	Транспонирование матрицы
@@ -128,10 +129,88 @@ namespace HomeWork_Lyulyaev
 			}
 		}
 		//f.	Вычисление определителя матрицы
+		public double Determinant()
+		{
+			if (Rows != Columns)
+			{
+				throw new ArgumentException();
+			}
+
+			var forDet = new MyMatrix(this);
+
+			forDet.LadderView(out int sign);
+
+			double detMatrix = 1;
+
+			for (int i = 0; i < Rows; i++)
+			{
+				detMatrix *= forDet[i, i];
+			}
+
+			return detMatrix*sign;
+		}
+
+		private void LadderView(out int replaceCount)
+		{
+			replaceCount = 1;
+
+			while (this[0, 0] == 0)
+			{
+				SwapRows(this, 0, new Random().Next(0, Rows));
+				replaceCount *= -1;
+			}
+
+			for (int j = 0; j < Rows; j++)
+			{
+				for (int i = 1 + j; i < Rows; i++)
+				{
+					if (this[i, j] != 0)
+					{
+						this[i] = this[i].Addition(this[j].MultiplyByScalar(-this[i, j] / this[j, j]));
+					}
+				}
+			}
+		}
+
+		private void SwapRows(MyMatrix matrix, int from, int to)
+		{
+			var temp = matrix[from];
+			matrix[from] = matrix[to];
+			matrix[to] = temp;
+		}
+
+
 		
 		//h.	умножение матрицы на вектор
-		public void MultiplyByVector(Vector vector)
+		public MyMatrix MultiplyByVector(Vector vector)
 		{
+			if (vector.IsColumn)
+			{
+				if (Columns != vector.Length)
+				{
+					throw new ArgumentException();
+				}
+
+				for (int i = 0; i < Rows; i++)
+				{
+					this[i] = this[i].MultiplyByVector(vector);
+				}
+				return this;
+			}
+			else if (Columns == 1 && Rows == vector.Length)
+			{
+				MyMatrix result = new MyMatrix(vector.Length, vector.Length);
+				for (int i = 0; i < vector.Length; i++)
+				{
+					result[i] = new Vector(vector);
+					result[i].MultiplyByScalar(this[i, 0]);
+				}
+				return result;
+			}
+			else 
+			{
+				throw new ArgumentException("несоотвествие аргументов произведения");
+			}
 
 		}
 		//i.	Сложение матриц

@@ -11,7 +11,9 @@ namespace HomeWork_Lyulyaev
 		private double[] elements;
 
 		public int Length => elements.Length;
-		
+
+		public bool IsColumn { get; set; } = false;
+
 		public double Module
 		{
 			get
@@ -106,13 +108,30 @@ namespace HomeWork_Lyulyaev
 			return this;
 		}
 
+		//vec * vec / by-component
+		public Vector MultiplyByVector(Vector second)
+		{
+			if (Length != second.Length)
+			{
+				throw new ArgumentException(nameof(second));
+			}
+
+			Vector result = new Vector(this);
+			for (int i = 0; i < Length; i++)
+			{
+				result[i] *= second[i];
+			}
+			return result;
+		}
+
 		//vec * num
-		public void MultiplyByScalar(double scalar)
+		public Vector MultiplyByScalar(double scalar)
 		{
 			for (int i = 0; i < Length; i++)
 			{
 				elements[i] *= scalar;
 			}
+			return this;
 		}
 
 		//vec * -1

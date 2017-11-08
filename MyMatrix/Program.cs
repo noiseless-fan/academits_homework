@@ -10,7 +10,15 @@ namespace HomeWork_Lyulyaev
 	{
 		public static void Main(String[] args)
 		{
-			MyMatrix mtrx = new MyMatrix(5, 3);
+			MyMatrix mtrx = new MyMatrix(new double[4][] 
+			{
+				new double[] { 2,5,1,-4},
+				new double[] { 0,-2,1,6},
+				new double[] { 3,-7,0,5},
+				new double[] { 1,-1,0,3}
+			});
+
+			/* 
 			Random rand = new Random();
 			for (int i = 0; i < mtrx.Rows; i++)
 			{
@@ -19,12 +27,11 @@ namespace HomeWork_Lyulyaev
 					mtrx[i, j] = rand.Next(0, 50);
 				}
 			}
+			*/
 
 			Console.WriteLine(mtrx);
 
-			
-
-			Console.WriteLine(mtrx);
+			Console.WriteLine(mtrx.Determinant());
 
 			Console.ReadKey();
 		}
