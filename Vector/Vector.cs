@@ -211,12 +211,12 @@ namespace HomeWork_Lyulyaev
 
 		public override int GetHashCode()
 		{
-			int prime = 7;
-			int hash = 0;
+			int prime = 31;
+			int hash = 1;
 
 			for (int i = 0; i < Length; i++)
 			{
-				hash = (int)(elements[i] % prime + hash % i);
+				hash *= (int)(elements[i] % prime + hash % (i + 1));
 			}
 
 			return hash;

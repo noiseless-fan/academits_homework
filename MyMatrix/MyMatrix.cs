@@ -13,7 +13,8 @@ namespace HomeWork_Lyulyaev
 
 		public int Rows => matrix.Length;
 		public int Columns => matrix[0].Length;
-		public string SizeString => $"{Rows} x {Columns}";
+
+		private static Random rnd = new Random();
 
 		//a.	Получение размеров матрицы ----см. поля
 		//b.	Получение и задание вектора-строки по индексу ----см. поля
@@ -91,6 +92,17 @@ namespace HomeWork_Lyulyaev
 			}
 		}
 		//Методы
+		public void FillRandom()
+		{
+			for (int i = 0; i < this.Rows; i++)
+			{
+				for (int j = 0; j < this.Columns; j++)
+				{
+					this[i, j] = rnd.Next(-10, 10);
+				}
+			}
+		}
+
 		//c.	Получение вектора-столбца по индексу
 		public Vector GetColumn(int index)
 		{
@@ -214,7 +226,41 @@ namespace HomeWork_Lyulyaev
 
 		}
 		//i.	Сложение матриц
+		public MyMatrix Addition(MyMatrix second)
+		{
+			if (Rows != second.Rows || Columns != second.Columns)
+			{
+				throw new ArgumentException("размеры не совпадают");
+			}
+
+			MyMatrix result = new MyMatrix(this);
+
+			for (int i = 0; i < Rows; i++)
+			{
+				result[i] = result[i].Addition(second[i]);
+			}
+			return result;
+		}
+
 		//j.	Вычитание матриц
+
+		public MyMatrix Subtraction(MyMatrix second)
+		{
+			if (Rows != second.Rows || Columns != second.Columns)
+			{
+				throw new ArgumentException("размеры не совпадают");
+			}
+
+			MyMatrix result = new MyMatrix(this);
+
+			for (int i = 0; i < Rows; i++)
+			{
+				result[i] = result[i].Subtraction(second[i]);
+			}
+			return result;
+		}
+
+		//toString | hash | equals
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
@@ -225,9 +271,96 @@ namespace HomeWork_Lyulyaev
 			return sb.ToString();
 		}
 
+		public override int GetHashCode()
+		{
+			int hash = 0;
+
+			for (int i = 0; i < Rows; i++)
+			{
+				hash += this[i].GetHashCode();
+			}
+			return hash;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(obj, this))
+			{
+				return true;
+			}
+			if (ReferenceEquals(obj, null) || obj.GetType() != this.GetType())
+			{
+				return false;
+			}
+
+			var comparable = obj as MyMatrix;
+
+			if (Rows != comparable.Rows || Columns != comparable.Columns)
+			{
+				return false;
+			}
+			for (int i = 0; i < Rows; i++)
+			{
+				if (this[i].Equals(comparable[i]))
+				{
+					continue;
+				}
+				return false;
+			}
+			return true;
+		}
+
 		//Статические методы:
 		//a.	Сложение матриц 
+		public static MyMatrix Addition(MyMatrix first, MyMatrix second)
+		{
+			if (first.Rows != second.Rows || first.Columns != second.Columns)
+			{
+				throw new ArgumentException("размеры не совпадают");
+			}
+
+			MyMatrix result = new MyMatrix(first);
+
+			for (int i = 0; i < first.Rows; i++)
+			{
+				result[i] = result[i].Addition(second[i]);
+			}
+			return result;
+		}
 		//b.	Вычитание матриц
+		public static MyMatrix Subtraction(MyMatrix first, MyMatrix second)
+		{
+			if (first.Rows != second.Rows || first.Columns != second.Columns)
+			{
+				throw new ArgumentException("размеры не совпадают");
+			}
+
+			MyMatrix result = new MyMatrix(first);
+
+			for (int i = 0; i < first.Rows; i++)
+			{
+				result[i] = result[i].Subtraction(second[i]);
+			}
+			return result;
+		}
 		//c.	Умножение матриц
+		public static MyMatrix Multiply(MyMatrix first, MyMatrix second)
+		{
+			if (first.Columns != second.Rows)
+			{
+				throw new ArgumentException("произведение не определенно");
+			}
+
+			var result = new MyMatrix(first.Rows, second.Columns);
+
+			for (int i = 0; i < result.Rows; i++)
+			{
+				for (int j = 0; j < result.Columns; j++)
+				{
+					result[i, j] = Vector.Composition(first[i], second.GetColumn(j));
+				}
+			}
+			return result;
+		}
 	}
 }

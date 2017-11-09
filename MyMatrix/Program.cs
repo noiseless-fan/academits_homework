@@ -10,7 +10,7 @@ namespace HomeWork_Lyulyaev
 	{
 		public static void Main(String[] args)
 		{
-			MyMatrix mtrx = new MyMatrix(new double[4][] 
+			MyMatrix mtrx = new MyMatrix(new double[][] 
 			{
 				new double[] { 2,5,1,-4},
 				new double[] { 0,-2,1,6},
@@ -18,20 +18,21 @@ namespace HomeWork_Lyulyaev
 				new double[] { 1,-1,0,3}
 			});
 
-			/* 
-			Random rand = new Random();
-			for (int i = 0; i < mtrx.Rows; i++)
-			{
-				for (int j = 0; j < mtrx.Columns; j++)
-				{
-					mtrx[i, j] = rand.Next(0, 50);
-				}
-			}
-			*/
-
 			Console.WriteLine(mtrx);
-
 			Console.WriteLine(mtrx.Determinant());
+			Console.WriteLine();
+
+			MyMatrix mtrx1 = new MyMatrix(3, 2);
+			mtrx1.FillRandom();
+
+			MyMatrix mtrx2 = new MyMatrix(3, 2);
+			mtrx2.FillRandom();
+
+			Console.WriteLine(mtrx1);
+			Console.WriteLine(mtrx2);
+
+			Console.WriteLine($"{mtrx1.GetHashCode()}, {mtrx2.GetHashCode()}");
+			Console.WriteLine(mtrx1.Equals(mtrx2));
 
 			Console.ReadKey();
 		}
