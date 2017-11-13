@@ -162,7 +162,7 @@ namespace HomeWork_Lyulyaev
 
 			var forDet = new MyMatrix(this);
 
-			forDet.LadderView(out int sign);
+			int sign = forDet.LadderView();
 
 			double detMatrix = 1;
 
@@ -174,9 +174,9 @@ namespace HomeWork_Lyulyaev
 			return detMatrix*sign;
 		}
 
-		private void LadderView(out int replaceCount)
+		private int LadderView()
 		{
-			replaceCount = 1;
+			int replaceCount = 1;
 
 			while (this[0, 0] == 0)
 			{
@@ -194,9 +194,10 @@ namespace HomeWork_Lyulyaev
 					}
 				}
 			}
+			return replaceCount;
 		}
 
-		private void SwapRows(MyMatrix matrix, int from, int to)
+		private static void SwapRows(MyMatrix matrix, int from, int to)
 		{
 			var temp = matrix[from];
 			matrix[from] = matrix[to];
