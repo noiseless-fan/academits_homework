@@ -10,12 +10,12 @@ namespace HomeWork_Lyulyaev
 	{
 		public static void Main(String[] args)
 		{
-			MyMatrix mtrx = new MyMatrix(new double[][] 
+			MyMatrix mtrx = new MyMatrix(new double[,] 
 			{
-				new double[] { 2,5,1,-4},
-				new double[] { 0,-2,1,6},
-				new double[] { 3,-7,0,5},
-				new double[] { 1,-1,0,3}
+				{ 2,5,1,-4},
+				{ 0,-2,1,6},
+				{ 3,-7,0,5},
+				{ 1,-1,0,3}
 			});
 
 			Console.WriteLine(mtrx);

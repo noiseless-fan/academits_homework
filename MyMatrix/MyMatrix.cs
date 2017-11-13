@@ -9,10 +9,10 @@ namespace HomeWork_Lyulyaev
 	public class MyMatrix
 	{
 		// поля и свойства
-		private Vector[] matrix;
+		private Vector[] _rows;
 
-		public int Rows => matrix.Length;
-		public int Columns => matrix[0].Length;
+		public int Rows => _rows.Length;
+		public int Columns => _rows[0].Length;
 
 		private static Random rnd = new Random();
 
@@ -22,7 +22,7 @@ namespace HomeWork_Lyulyaev
 		{
 			get
 			{
-				return new Vector(matrix[row]);
+				return new Vector(_rows[row]);
 			}
 			set
 			{
@@ -30,20 +30,20 @@ namespace HomeWork_Lyulyaev
 				{
 					throw new ArgumentOutOfRangeException(nameof(row));
 				}
-				matrix[row] = new Vector(value);
+				_rows[row] = new Vector(value);
 			}
 		}
 		
 		public double this[int row, int column]
 		{
-			get => matrix[row][column];
+			get => _rows[row][column];
 			set
 			{
 				if (row < 0 || row >= Rows || column < 0 || column >= Columns)
 				{
 					throw new ArgumentOutOfRangeException(nameof(row));
 				}
-				matrix[row][column] = value;
+				_rows[row][column] = value;
 			}
 		}
 		//Конструкторы:
@@ -54,41 +54,53 @@ namespace HomeWork_Lyulyaev
 			{
 				throw new ArgumentOutOfRangeException("недопустимые размеры матрицы");
 			}
-			matrix = new Vector[rows];
+			_rows = new Vector[rows];
 			for(int i = 0; i < rows; i++)
 			{
-				matrix[i] = new Vector(columns);
+				_rows[i] = new Vector(columns);
 			}
 		}
 		//b.	Matrix(Matrix) – конструктор копирования
 		public MyMatrix(MyMatrix copyFrom)
 		{
-			matrix = new Vector[copyFrom.Rows];
+			_rows = new Vector[copyFrom.Rows];
 			for (int i = 0; i < Rows; i++)
 			{
-				matrix[i] = new Vector(copyFrom[i]);
+				_rows[i] = new Vector(copyFrom[i]);
 			}
 		}
 		//c.	Matrix(double[][]) – из двумерного массива
-		public MyMatrix(double[][] arr)
+		public MyMatrix(double[,] arr)
 		{
-			if (arr.Rank < 1 || arr.Length == 0 || arr == null)
+			if (arr.Length == 0 || arr == null)
 			{
 				throw new ArgumentException(nameof(arr), "недопустимый массив для копирования.");
 			}
-			matrix = new Vector[arr.Length];
-			for (int i = 0; i < matrix.Length; i++)
+
+			_rows = new Vector[arr.Length / arr.GetLength(0)];
+			for (int i = 0; i < _rows.Length; i++)
 			{
-				matrix[i] = new Vector(arr[i]);
+				_rows[i] = new Vector(arr.GetLength(0));
+				for (int j = 0; j < _rows[i].Length; j++)
+				{
+					_rows[i][j] = arr[i, j];
+				}
 			}
 		}
 		//d.	Matrix(Vector[]) – из массива векторов-строк
 		public MyMatrix(Vector[] vector)
 		{
-			matrix = new Vector[vector.Length];
-			for (int i = 0; i < matrix.Length; i++)
+			_rows = new Vector[vector.Length];
+
+			int maxLength = vector[0].Length;
+			foreach (Vector vec in vector)
 			{
-				matrix[i] = new Vector(vector[i]);
+				maxLength = Math.Max(maxLength, vec.Length);
+			}
+
+			for (int i = 0; i < _rows.Length; i++)
+			{
+				_rows[i] = new Vector(maxLength).Addition(vector[i]);
 			}
 		}
 		//Методы
@@ -120,7 +132,7 @@ namespace HomeWork_Lyulyaev
 			return column;
 		}
 		//d.	Транспонирование матрицы
-		public MyMatrix Transpose()
+		public void Transpose()
 		{
 			MyMatrix transposed = new MyMatrix(Columns, Rows);
 			for (int i = 0; i < Rows; i++)
@@ -130,12 +142,12 @@ namespace HomeWork_Lyulyaev
 					transposed[j,i] = this[i,j];
 				}
 			}
-			return transposed;
+			_rows = transposed._rows;
 		}
 		//e.	Умножение на скаляр
 		public void MultiplyByScalar(double scalar)
 		{
-			foreach (Vector vec in matrix)
+			foreach (Vector vec in _rows)
 			{
 				vec.MultiplyByScalar(scalar);
 			}
@@ -264,7 +276,7 @@ namespace HomeWork_Lyulyaev
 		public override string ToString()
 		{
 			StringBuilder sb = new StringBuilder();
-			foreach (Vector vector in matrix)
+			foreach (Vector vector in _rows)
 			{
 				sb.Append(vector.ToString()).Append(Environment.NewLine);
 			}
