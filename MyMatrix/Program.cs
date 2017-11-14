@@ -22,7 +22,7 @@ namespace HomeWork_Lyulyaev
 			Console.WriteLine(mtrx.Determinant());
 			Console.WriteLine();
 
-			MyMatrix mtrx1 = new MyMatrix(3, 2);
+			MyMatrix mtrx1 = new MyMatrix(4, 4);
 			mtrx1.FillRandom();
 
 			MyMatrix mtrx2 = new MyMatrix(3, 2);
@@ -33,6 +33,9 @@ namespace HomeWork_Lyulyaev
 
 			Console.WriteLine($"{mtrx1.GetHashCode()}, {mtrx2.GetHashCode()}");
 			Console.WriteLine(mtrx1.Equals(mtrx2));
+
+			mtrx.Transpose();
+			Console.WriteLine(mtrx.Addition(mtrx1));
 
 			Console.ReadKey();
 		}

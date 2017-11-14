@@ -12,8 +12,6 @@ namespace HomeWork_Lyulyaev
 
 		public int Length => elements.Length;
 
-		public bool IsColumn { get; set; } = false;
-
 		public double Module
 		{
 			get

@@ -26,7 +26,7 @@ namespace HomeWork_Lyulyaev
 			}
 			set
 			{
-				if (row < 0 || row >= Rows)
+				if (row < 0 || row >= Rows || value.Length > _rows[row].Length)
 				{
 					throw new ArgumentOutOfRangeException(nameof(row));
 				}
@@ -128,21 +128,18 @@ namespace HomeWork_Lyulyaev
 			{
 				column[i] = this[i, index];
 			}
-			column.IsColumn = true;
 			return column;
 		}
 		//d.	Транспонирование матрицы
 		public void Transpose()
 		{
-			MyMatrix transposed = new MyMatrix(Columns, Rows);
-			for (int i = 0; i < Rows; i++)
+			Vector[] transposed = new Vector[Columns];
+
+			for (int i = 0; i < transposed.Length; i++)
 			{
-				for (int j = 0; j < Columns; j++)
-				{
-					transposed[j,i] = this[i,j];
-				}
+				transposed[i] = this.GetColumn(i);
 			}
-			_rows = transposed._rows;
+			_rows = transposed;
 		}
 		//e.	Умножение на скаляр
 		public void MultiplyByScalar(double scalar)
@@ -204,39 +201,19 @@ namespace HomeWork_Lyulyaev
 			matrix[to] = temp;
 		}
 
-
-		
 		//h.	умножение матрицы на вектор
 		public MyMatrix MultiplyByVector(Vector vector)
 		{
-			if (vector.IsColumn)
+			if (Columns != vector.Length)
 			{
-				if (Columns != vector.Length)
-				{
-					throw new ArgumentException();
-				}
-
-				for (int i = 0; i < Rows; i++)
-				{
-					this[i] = this[i].MultiplyByVector(vector);
-				}
-				return this;
-			}
-			else if (Columns == 1 && Rows == vector.Length)
-			{
-				MyMatrix result = new MyMatrix(vector.Length, vector.Length);
-				for (int i = 0; i < vector.Length; i++)
-				{
-					result[i] = new Vector(vector);
-					result[i].MultiplyByScalar(this[i, 0]);
-				}
-				return result;
-			}
-			else 
-			{
-				throw new ArgumentException("несоотвествие аргументов произведения");
+				throw new ArgumentException();
 			}
 
+			for (int i = 0; i < Rows; i++)
+			{
+				this[i] = this[i].MultiplyByVector(vector);
+			}
+			return this;
 		}
 		//i.	Сложение матриц
 		public MyMatrix Addition(MyMatrix second)
@@ -246,13 +223,11 @@ namespace HomeWork_Lyulyaev
 				throw new ArgumentException("размеры не совпадают");
 			}
 
-			MyMatrix result = new MyMatrix(this);
-
 			for (int i = 0; i < Rows; i++)
 			{
-				result[i] = result[i].Addition(second[i]);
+				this[i] = this[i].Addition(second[i]);
 			}
-			return result;
+			return this;
 		}
 
 		//j.	Вычитание матриц
@@ -264,13 +239,11 @@ namespace HomeWork_Lyulyaev
 				throw new ArgumentException("размеры не совпадают");
 			}
 
-			MyMatrix result = new MyMatrix(this);
-
 			for (int i = 0; i < Rows; i++)
 			{
-				result[i] = result[i].Subtraction(second[i]);
+				this[i] = this[i].Subtraction(second[i]);
 			}
-			return result;
+			return this;
 		}
 
 		//toString | hash | equals
@@ -306,7 +279,7 @@ namespace HomeWork_Lyulyaev
 				return false;
 			}
 
-			var comparable = obj as MyMatrix;
+			var comparable = (MyMatrix)obj;
 
 			if (Rows != comparable.Rows || Columns != comparable.Columns)
 			{
@@ -332,13 +305,7 @@ namespace HomeWork_Lyulyaev
 				throw new ArgumentException("размеры не совпадают");
 			}
 
-			MyMatrix result = new MyMatrix(first);
-
-			for (int i = 0; i < first.Rows; i++)
-			{
-				result[i] = result[i].Addition(second[i]);
-			}
-			return result;
+			return new MyMatrix(first.Addition(second));
 		}
 		//b.	Вычитание матриц
 		public static MyMatrix Subtraction(MyMatrix first, MyMatrix second)
@@ -348,13 +315,7 @@ namespace HomeWork_Lyulyaev
 				throw new ArgumentException("размеры не совпадают");
 			}
 
-			MyMatrix result = new MyMatrix(first);
-
-			for (int i = 0; i < first.Rows; i++)
-			{
-				result[i] = result[i].Subtraction(second[i]);
-			}
-			return result;
+			return new MyMatrix(first.Subtraction(second));
 		}
 		//c.	Умножение матриц
 		public static MyMatrix Multiply(MyMatrix first, MyMatrix second)
