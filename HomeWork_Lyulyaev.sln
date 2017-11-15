@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMatrix", "MyMatrix\MyMatr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertCSV", "ConvertCSV\ConvertCSV.csproj", "{71ECD929-22D7-43E4-A566-92141F81F52F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySLList", "MyList\MySLList.csproj", "{128BB139-F467-4816-BB4F-EB49848AAD1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{71ECD929-22D7-43E4-A566-92141F81F52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71ECD929-22D7-43E4-A566-92141F81F52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71ECD929-22D7-43E4-A566-92141F81F52F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{128BB139-F467-4816-BB4F-EB49848AAD1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{128BB139-F467-4816-BB4F-EB49848AAD1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{128BB139-F467-4816-BB4F-EB49848AAD1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{128BB139-F467-4816-BB4F-EB49848AAD1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
