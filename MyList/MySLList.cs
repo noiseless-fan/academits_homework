@@ -33,6 +33,7 @@ namespace MySLList
 		//•	получение/изменение значения по указанному индексу. --------------
 		public Node<T> this[int index]
 		{
+			//•	получение узла по индексу ---------------------
 			get
 			{
 				int iterator = CheckBounds(index, Count);
@@ -98,6 +99,7 @@ namespace MySLList
 			Count++;
 		}
 
+		//•	вставка элемента в начало ---------------------
 		public void AddToTop(T data)
 		{
 			Node<T> temp = First;
@@ -105,6 +107,7 @@ namespace MySLList
 			Count++;
 		}
 
+		//•	удаление первого элемента, пусть выдает значение элемента ---------------
 		public void DeleteFromTop()
 		{
 			Console.WriteLine("deleted value = {0}", First.Data);
@@ -112,6 +115,7 @@ namespace MySLList
 			Count--;
 		}
 
+		//•	удаление элемента по индексу, пусть выдает значение элемента -------------
 		public void Delete(int index)
 		{
 			index = CheckBounds(index, Count);
@@ -138,6 +142,7 @@ namespace MySLList
 			}
 		}
 
+		//•	удаление узла по значению -------------------
 		public void Delete(T data)
 		{
 			Node<T> temp = First;
@@ -155,6 +160,7 @@ namespace MySLList
 			}
  		}
 
+		//•	вставка элемента по индексу -------------------
 		public void Insert(int index, T data)
 		{
 			index = CheckBounds(index, Count);
@@ -169,19 +175,12 @@ namespace MySLList
 			return (index <= 0 || index > count) ? throw new ArgumentOutOfRangeException(nameof(index)) : index;
 		}
 
+		public void Reverse()
+		{
 
-
+		}
 		
-		
-		
-		
-		//•	получение узла по индексу ---------------------
-		//•	удаление элемента по индексу, пусть выдает значение элемента -------------
-		//•	вставка элемента в начало ---------------------
-		//•	вставка элемента по индексу -------------------
-		//•	удаление узла по значению -------------------
-		//•	удаление первого элемента, пусть выдает значение элемента ---------------
-		//•	вставка и удаление узла после указанного узла
+		//TODO:•	вставка и удаление узла после указанного узла ???? Указанного по индексу или значению?
 		//•	разворот списка за линейное время
 		//•	копирование списка
 		//2* (Эта задача не обязательная). Есть односвязный список, каждый элемент которого хранит дополнительную ссылку 
