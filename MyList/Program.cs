@@ -28,6 +28,13 @@ namespace MySLList
 
 			mylist.SetValue(3, "wertwe");
 
+			mylist.Insert(3, "test");
+
+			Console.WriteLine(mylist);
+			Console.WriteLine();
+
+			mylist.Delete(5);
+
 			Console.WriteLine(mylist);
 			Console.WriteLine();
 

@@ -6,27 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MySLList
-{
-	public class Node<T>
-	{
-		public T Data { get; set; }
-		public Node<T> Next { get; set; } = null;
-
-		public Node(T data)
-		{
-			Data = data;
-		}
-		public Node(T data, Node<T> next)
-		{
-			Data = data;
-			Next = next;
-		}
-	}
-
-	public class MySLList<T>: IEnumerable
+{ 
+	public class MySLList<T>: IEnumerable<T>
 	{
 		//•	получение первого узла -------------
-		public Node<T> First { get; set; } = null;
+		public Node<T> First { get; set; }
 		//•	получение размера списка -----------
 		public int Count { get; private set; } = 0;
 
@@ -36,7 +20,7 @@ namespace MySLList
 			//•	получение узла по индексу ---------------------
 			get
 			{
-				int iterator = CheckBounds(index, Count);
+				int iterator = CheckBounds(index);
 				Node<T> temp = First;
 				for (; temp != null && iterator != 1; temp = temp.Next, iterator--)
 				{ }
@@ -44,13 +28,11 @@ namespace MySLList
 			}
 			set
 			{
-				int iterator = CheckBounds(index, Count);
+				int iterator = CheckBounds(index);
 				Node<T> temp = First;
 				for (; temp != null && iterator != 1; temp = temp.Next, iterator--)
 				{ }
-				Console.WriteLine("old value = {0}", temp.Data);
 				temp.Data = value.Data;
-				Console.WriteLine("new value = {0}", temp.Data);
 			}
 		}
 
@@ -60,20 +42,18 @@ namespace MySLList
 
 		public T GetValue(int index)
 		{
-			int iterator = CheckBounds(index, Count);
+			int iterator = CheckBounds(index);
 			return this[index].Data;
 		}
 
 		//Изменение значения по индексу пусть выдает старое значение. ---------
 		public void SetValue(int index, T data)
 		{
-			int iterator = CheckBounds(index, Count);
+			int iterator = CheckBounds(index);
 			foreach (Node<T> node in this)
 			{
 				if (iterator == 1)
 				{
-					Console.WriteLine("old value = {0}", node.Data);
-					Console.WriteLine("new value = {0}", data);
 					node.Data = data;
 					return;
 				}
@@ -118,7 +98,7 @@ namespace MySLList
 		//•	удаление элемента по индексу, пусть выдает значение элемента -------------
 		public void Delete(int index)
 		{
-			index = CheckBounds(index, Count);
+			index = CheckBounds(index);
 
 			if (Count > 0)
 			{
@@ -163,25 +143,29 @@ namespace MySLList
 		//•	вставка элемента по индексу -------------------
 		public void Insert(int index, T data)
 		{
-			index = CheckBounds(index, Count);
+			index = CheckBounds(index);
 
 			Node<T> temp = this[index];
 			this[index - 1].Next = new Node<T>(data, temp);
 			Count++;
 		}
 
-		private static int CheckBounds(int index, int count)
+		//TODO:•	вставка и удаление узла после указанного узла
+		public void InsertAfter(Node<T> paste)
 		{
-			return (index <= 0 || index > count) ? throw new ArgumentOutOfRangeException(nameof(index)) : index;
+			
 		}
 
+		//•	разворот списка за линейное время
 		public void Reverse()
 		{
 
 		}
-		
-		//TODO:•	вставка и удаление узла после указанного узла ???? Указанного по индексу или значению?
-		//•	разворот списка за линейное время
+
+		private int CheckBounds(int index)
+		{
+			return (index <= 0 || index > Count) ? throw new ArgumentOutOfRangeException(nameof(index)) : index;
+		}
 		//•	копирование списка
 		//2* (Эта задача не обязательная). Есть односвязный список, каждый элемент которого хранит дополнительную ссылку 
 		//на произвольный элемент списка.Эта ссылка может быть и null.
@@ -189,22 +173,32 @@ namespace MySLList
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			foreach (Node<T> var in this)
+			foreach (Node<T> node in this)
 			{
-				sb.Append(var.Data + Environment.NewLine);
+				sb.Append(node.Data + Environment.NewLine);
 			}
 			return sb.ToString();
 		}
 
-		IEnumerator IEnumerable.GetEnumerator()
+		public IEnumerator GetEnumerator()
 		{
-			Node<T> temp = First;
-			while (temp != null)
+			for (Node<T> temp = First; temp != null; temp = temp.Next)
 			{
 				yield return temp;
-				temp = temp.Next;
 			}
-			yield break;
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		IEnumerator<T> IEnumerable<T>.GetEnumerator()
+		{
+			for (Node<T> temp = First; temp != null; temp = temp.Next)
+			{
+				yield return temp.Data;
+			}
 		}
 	}
 }
