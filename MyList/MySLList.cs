@@ -12,27 +12,29 @@ namespace MySLList
 		//•	получение первого узла -------------
 		public Node<T> First { get; set; }
 		//•	получение размера списка -----------
-		public int Count { get; private set; } = 0;
+		public int Count { get; private set; }
 
-		//•	получение/изменение значения по указанному индексу. --------------
 		public Node<T> this[int index]
 		{
-			//•	получение узла по индексу ---------------------
 			get
 			{
-				int iterator = CheckBounds(index);
+				CheckBounds(index);
+				int iterator = index;
 				Node<T> temp = First;
 				for (; temp != null && iterator != 1; temp = temp.Next, iterator--)
 				{ }
 				return temp;
 			}
+			
 			set
 			{
-				int iterator = CheckBounds(index);
+				CheckBounds(index);
+				int iterator = index;
 				Node<T> temp = First;
 				for (; temp != null && iterator != 1; temp = temp.Next, iterator--)
 				{ }
 				temp.Data = value.Data;
+				value = null;
 			}
 		}
 
@@ -40,25 +42,22 @@ namespace MySLList
 		{
 		}
 
+		//•	получение узла по индексу ---------------------
+		//Изменение значения по индексу пусть выдает старое значение. ---------
+		//•	получение/изменение значения по указанному индексу. --------------
+
 		public T GetValue(int index)
 		{
-			int iterator = CheckBounds(index);
+			CheckBounds(index);
 			return this[index].Data;
 		}
 
-		//Изменение значения по индексу пусть выдает старое значение. ---------
-		public void SetValue(int index, T data)
+		public T SetValue(int index, T data)
 		{
-			int iterator = CheckBounds(index);
-			foreach (Node<T> node in this)
-			{
-				if (iterator == 1)
-				{
-					node.Data = data;
-					return;
-				}
-				iterator--;
-			}
+			CheckBounds(index);
+			T temp = this[index].Data;
+			this[index].Data = data;
+			return temp;
 		}
 
 		public void Add(T data)
@@ -88,38 +87,42 @@ namespace MySLList
 		}
 
 		//•	удаление первого элемента, пусть выдает значение элемента ---------------
-		public void DeleteFromTop()
+		public T DeleteFromTop()
 		{
-			Console.WriteLine("deleted value = {0}", First.Data);
+			T temp = First.Data;
 			First = First.Next;
 			Count--;
+			return temp;
 		}
 
 		//•	удаление элемента по индексу, пусть выдает значение элемента -------------
-		public void Delete(int index)
+		public T Delete(int index)
 		{
-			index = CheckBounds(index);
+			CheckBounds(index);
 
 			if (Count > 0)
 			{
 				Node<T> temp = First;
 				Node<T> prev = null;
+		
 				int iterator = index;
 				for (; temp.Next != null ; prev = temp, temp = temp.Next, iterator--)
 				{
 					if (iterator == 1)
 					{
-						Console.WriteLine("deleted value = {0}", prev.Next.Data);
+						T tempdata = prev.Next.Data;
 						prev.Next = temp.Next;
 						prev = null;
 						Count--;
+						return tempdata;
 					}
 				}	
 			}
 			else
 			{
-				Console.WriteLine("nothing to delete");
+				throw new ArgumentException();
 			}
+			return default(T);
 		}
 
 		//•	удаление узла по значению -------------------
@@ -143,7 +146,7 @@ namespace MySLList
 		//•	вставка элемента по индексу -------------------
 		public void Insert(int index, T data)
 		{
-			index = CheckBounds(index);
+			CheckBounds(index);
 
 			Node<T> temp = this[index];
 			this[index - 1].Next = new Node<T>(data, temp);
@@ -151,36 +154,85 @@ namespace MySLList
 		}
 
 		//TODO:•	вставка и удаление узла после указанного узла
-		public void InsertAfter(Node<T> paste)
+		public void DeleteAfter(Node<T> paste)
 		{
-			
+			Delete(paste.Data);
 		}
 
 		//•	разворот списка за линейное время
 		public void Reverse()
 		{
+			if (Count == 1)
+			{
+				return;
+			}
+			if (Count == 2)
+			{
+				Node<T> temp = First;
+				First = temp.Next;
+				First.Next = temp;
+				temp.Next = null;
+			}
+			if (Count >= 3)
+			{
+				Node<T> next = First.Next.Next;
+				Node<T> current = First.Next;
+				Node<T> prev = First;
+				prev.Next = null;
 
+				for (; next != null; prev = current, current = next, next = next.Next)
+				{
+					current.Next = prev;
+					if (next.Next == null)
+					{
+						next.Next = current;
+						First = next;
+						break;
+					}
+				}
+			}
 		}
 
-		private int CheckBounds(int index)
-		{
-			return (index <= 0 || index > Count) ? throw new ArgumentOutOfRangeException(nameof(index)) : index;
-		}
 		//•	копирование списка
+		public MySLList<T> Copy()
+		{
+			MySLList<T> copy = new MySLList<T>();
+
+			foreach (Node<T> node in GetNextNode())
+			{
+				copy.Add(node.Data);
+			}
+			return copy;
+		}
+
+
+		public void Reset()
+		{
+			First = null;
+			Count = 0;
+		}
+
+		private void CheckBounds(int index)
+		{
+			if (index <= 0 || index > Count)
+			{
+				throw new ArgumentOutOfRangeException(nameof(index));
+			}
+		}
 		//2* (Эта задача не обязательная). Есть односвязный список, каждый элемент которого хранит дополнительную ссылку 
 		//на произвольный элемент списка.Эта ссылка может быть и null.
 		//Надо создать копию этого списка, чтобы в копии эти произвольные ссылки ссылались на соответствующие элементы в копии.
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			foreach (Node<T> node in this)
+			foreach (Node<T> node in GetNextNode())
 			{
 				sb.Append(node.Data + Environment.NewLine);
 			}
 			return sb.ToString();
 		}
 
-		public IEnumerator GetEnumerator()
+		private IEnumerable<Node<T>> GetNextNode()
 		{
 			for (Node<T> temp = First; temp != null; temp = temp.Next)
 			{
@@ -190,10 +242,10 @@ namespace MySLList
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return GetEnumerator();
+			yield return GetNextNode();
 		}
 
-		IEnumerator<T> IEnumerable<T>.GetEnumerator()
+		public IEnumerator<T> GetEnumerator()
 		{
 			for (Node<T> temp = First; temp != null; temp = temp.Next)
 			{

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,19 +22,7 @@ namespace MySLList
 			Console.WriteLine(mylist);
 			Console.WriteLine();
 
-			mylist.Delete(3);
-
-			Console.WriteLine(mylist);
-			Console.WriteLine();
-
-			mylist.SetValue(3, "wertwe");
-
-			mylist.Insert(3, "test");
-
-			Console.WriteLine(mylist);
-			Console.WriteLine();
-
-			mylist.Delete(5);
+			mylist.Reverse();
 
 			Console.WriteLine(mylist);
 			Console.WriteLine();
