@@ -25,17 +25,6 @@ namespace MySLList
 				{ }
 				return temp;
 			}
-			
-			set
-			{
-				CheckBounds(index);
-				int iterator = index;
-				Node<T> temp = First;
-				for (; temp != null && iterator != 1; temp = temp.Next, iterator--)
-				{ }
-				temp.Data = value.Data;
-				value = null;
-			}
 		}
 
 		public MySLList()
@@ -126,21 +115,24 @@ namespace MySLList
 		}
 
 		//•	удаление узла по значению -------------------
-		public void Delete(T data)
+		public bool Delete(T data)
 		{
 			Node<T> temp = First;
 			Node<T> prev = null;
+
+			bool isDeleted = false;
 
 			for (; temp.Next != null; prev = temp, temp = temp.Next)
 			{
 				if (temp.Data.Equals(data))
 				{
 					prev.Next = temp.Next;
-					temp = null;
+					isDeleted = true;
 					Count--;
 					break;
 				}
 			}
+			return isDeleted;
  		}
 
 		//•	вставка элемента по индексу -------------------
@@ -153,7 +145,7 @@ namespace MySLList
 			Count++;
 		}
 
-		//TODO:•	вставка и удаление узла после указанного узла
+		//	вставка и удаление узла после указанного узла
 		public void DeleteAfter(Node<T> paste)
 		{
 			Delete(paste.Data);
@@ -162,7 +154,7 @@ namespace MySLList
 		//•	разворот списка за линейное время
 		public void Reverse()
 		{
-			if (Count == 1)
+			if (Count <= 1)
 			{
 				return;
 			}
@@ -172,23 +164,22 @@ namespace MySLList
 				First = temp.Next;
 				First.Next = temp;
 				temp.Next = null;
+				return;
 			}
-			if (Count >= 3)
-			{
-				Node<T> next = First.Next.Next;
-				Node<T> current = First.Next;
-				Node<T> prev = First;
-				prev.Next = null;
 
-				for (; next != null; prev = current, current = next, next = next.Next)
+			Node<T> next = First.Next.Next;
+			Node<T> current = First.Next;
+			Node<T> prev = First;
+			prev.Next = null;
+
+			for (; next != null; prev = current, current = next, next = next.Next)
+			{
+				current.Next = prev;
+				if (next.Next == null)
 				{
-					current.Next = prev;
-					if (next.Next == null)
-					{
-						next.Next = current;
-						First = next;
-						break;
-					}
+					next.Next = current;
+					First = next;
+					break;
 				}
 			}
 		}
@@ -196,15 +187,17 @@ namespace MySLList
 		//•	копирование списка
 		public MySLList<T> Copy()
 		{
-			MySLList<T> copy = new MySLList<T>();
-
-			foreach (Node<T> node in GetNextNode())
+			MySLList<T> copy = new MySLList<T>
 			{
-				copy.Add(node.Data);
+				First = new Node<T>(this.First.Data)
+			};
+
+			for (Node<T> copyTo = copy.First, copyFrom = this.First.Next; copyFrom != null; copyFrom = copyFrom.Next, copyTo = copyTo.Next)
+			{
+				copyTo.Next = new Node<T>(copyFrom.Data);
 			}
 			return copy;
 		}
-
 
 		public void Reset()
 		{
@@ -225,24 +218,24 @@ namespace MySLList
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
-			foreach (Node<T> node in GetNextNode())
+			foreach (T data in this)
 			{
-				sb.Append(node.Data + Environment.NewLine);
+				sb.Append(data + Environment.NewLine);
 			}
 			return sb.ToString();
 		}
 
-		private IEnumerable<Node<T>> GetNextNode()
+		private IEnumerable<Node<T>> GetNodes()
 		{
 			for (Node<T> temp = First; temp != null; temp = temp.Next)
 			{
 				yield return temp;
 			}
-		}
+		} 
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			yield return GetNextNode();
+			return (IEnumerator<T>)GetEnumerator();
 		}
 
 		public IEnumerator<T> GetEnumerator()

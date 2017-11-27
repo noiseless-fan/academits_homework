@@ -14,7 +14,7 @@ namespace MySLList
 			MySLList<string> mylist = new MySLList<string>();
 			mylist.Add("123");
 			mylist.Add("1234");
-			mylist.Add("werwer");
+			mylist.Add(null);
 			mylist.Add("2134123");
 			mylist.Add("2312");
 			mylist.Add("abc");
@@ -27,7 +27,9 @@ namespace MySLList
 			Console.WriteLine(mylist);
 			Console.WriteLine();
 
-			Console.WriteLine(mylist.Count);
+			var testCopy = mylist.Copy();
+
+			Console.WriteLine(testCopy);
 
 			Console.ReadKey();
 		}

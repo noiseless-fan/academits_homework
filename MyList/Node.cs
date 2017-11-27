@@ -14,6 +14,7 @@ namespace MySLList
 		public T Data
 		{
 			get => data;
+
 			set
 			{
 				OnChange(value);
