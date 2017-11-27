@@ -22,11 +22,15 @@ namespace HomeWork_Lyulyaev
 		{
 			get
 			{
+				if (row < 0 || row >= Rows)
+				{
+					throw new ArgumentOutOfRangeException(nameof(row));
+				}
 				return new Vector(_rows[row]);
 			}
 			set
 			{
-				if (row < 0 || row >= Rows || value.Length > _rows[row].Length)
+				if (row < 0 || row >= Rows || value.Length > _rows[row].Length || value.Length < _rows[row].Length)
 				{
 					throw new ArgumentOutOfRangeException(nameof(row));
 				}
@@ -36,7 +40,14 @@ namespace HomeWork_Lyulyaev
 		
 		public double this[int row, int column]
 		{
-			get => _rows[row][column];
+			get
+			{
+				if (row < 0 || row >= Rows || column < 0 || column >= Columns)
+				{
+					throw new ArgumentOutOfRangeException(nameof(row));
+				}
+				return _rows[row][column];
+			}
 			set
 			{
 				if (row < 0 || row >= Rows || column < 0 || column >= Columns)
@@ -72,15 +83,15 @@ namespace HomeWork_Lyulyaev
 		//c.	Matrix(double[][]) – из двумерного массива
 		public MyMatrix(double[,] arr)
 		{
-			if (arr.Length == 0 || arr == null)
+			if (arr.Length == 0)
 			{
 				throw new ArgumentException(nameof(arr), "недопустимый массив для копирования.");
 			}
 
-			_rows = new Vector[arr.Length / arr.GetLength(0)];
+			_rows = new Vector[arr.GetLength(0)];
 			for (int i = 0; i < _rows.Length; i++)
 			{
-				_rows[i] = new Vector(arr.GetLength(0));
+				_rows[i] = new Vector(arr.GetLength(1));
 				for (int j = 0; j < _rows[i].Length; j++)
 				{
 					_rows[i][j] = arr[i, j];
@@ -202,18 +213,29 @@ namespace HomeWork_Lyulyaev
 		}
 
 		//h.	умножение матрицы на вектор
-		public MyMatrix MultiplyByVector(Vector vector)
+		public Vector MultiplyByVector(Vector vector)
 		{
 			if (Columns != vector.Length)
 			{
 				throw new ArgumentException();
 			}
 
-			for (int i = 0; i < Rows; i++)
+			Vector result = new Vector(Rows);
+			for (int i = 0; i < result.Length; i++)
 			{
-				this[i] = this[i].MultiplyByVector(vector);
+				result[i] = Sum(this[i].MultiplyByVector(vector));
 			}
-			return this;
+			return result;
+		}
+
+		private double Sum(Vector vector)
+		{
+			double sum = 0;
+			for (int i = 0; i < vector.Length; i++)
+			{
+				sum += vector[i];
+			}
+			return sum;
 		}
 		//i.	Сложение матриц
 		public MyMatrix Addition(MyMatrix second)
@@ -252,7 +274,7 @@ namespace HomeWork_Lyulyaev
 			StringBuilder sb = new StringBuilder();
 			foreach (Vector vector in _rows)
 			{
-				sb.Append(vector.ToString()).Append(Environment.NewLine);
+				sb.Append(vector).Append(Environment.NewLine);
 			}
 			return sb.ToString();
 		}
@@ -305,7 +327,7 @@ namespace HomeWork_Lyulyaev
 				throw new ArgumentException("размеры не совпадают");
 			}
 
-			return new MyMatrix(first.Addition(second));
+			return new MyMatrix(new MyMatrix(first).Addition(second));
 		}
 		//b.	Вычитание матриц
 		public static MyMatrix Subtraction(MyMatrix first, MyMatrix second)
@@ -315,7 +337,7 @@ namespace HomeWork_Lyulyaev
 				throw new ArgumentException("размеры не совпадают");
 			}
 
-			return new MyMatrix(first.Subtraction(second));
+			return new MyMatrix(new MyMatrix(first).Subtraction(second));
 		}
 		//c.	Умножение матриц
 		public static MyMatrix Multiply(MyMatrix first, MyMatrix second)

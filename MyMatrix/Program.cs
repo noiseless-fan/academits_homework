@@ -37,6 +37,15 @@ namespace HomeWork_Lyulyaev
 			mtrx.Transpose();
 			Console.WriteLine(mtrx.Addition(mtrx1));
 
+			MyMatrix mtrx3 = new MyMatrix(2, 4);
+			mtrx3.FillRandom();
+			Console.WriteLine(mtrx3);
+
+			Vector vec = new Vector(new double[4] { 2, 2, 2, 2 }); 
+
+			Console.WriteLine();
+			Console.WriteLine(mtrx3.MultiplyByVector(vec));
+
 			Console.ReadKey();
 		}
 	}
