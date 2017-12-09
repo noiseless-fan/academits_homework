@@ -10,7 +10,7 @@ namespace MySLList
 	public class MySLList<T>: IEnumerable<T>
 	{
 		//•	получение первого узла -------------
-		public Node<T> First { get; set; }
+		public Node<T> First { get; private set; }
 		//•	получение размера списка -----------
 		public int Count { get; private set; }
 

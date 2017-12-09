@@ -132,7 +132,17 @@ namespace HomeWork_Lyulyaev
 			return this;
 		}
 
-		//vec * -1
+		public double SumElements()
+		{
+			double sum = 0;
+			for (int i = 0; i < Length; i++)
+			{
+				sum += this[i];
+			}
+			return sum;
+		}
+
+			//vec * -1
 		public void Reverse()
 		{
 			MultiplyByScalar(-1.0);

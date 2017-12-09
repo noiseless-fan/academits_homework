@@ -25,7 +25,7 @@ namespace HomeWork_Lyulyaev
 			MyMatrix mtrx1 = new MyMatrix(4, 4);
 			mtrx1.FillRandom();
 
-			MyMatrix mtrx2 = new MyMatrix(3, 2);
+			MyMatrix mtrx2 = new MyMatrix(4, 4);
 			mtrx2.FillRandom();
 
 			Console.WriteLine(mtrx1);
@@ -45,6 +45,11 @@ namespace HomeWork_Lyulyaev
 
 			Console.WriteLine();
 			Console.WriteLine(mtrx3.MultiplyByVector(vec));
+
+			Console.WriteLine();
+			Console.WriteLine(MyMatrix.Addition(mtrx1, mtrx2));
+			Console.WriteLine(mtrx1);
+			Console.WriteLine(mtrx2);
 
 			Console.ReadKey();
 		}
