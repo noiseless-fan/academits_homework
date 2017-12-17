@@ -15,11 +15,15 @@ namespace MySLList
 			MySLList<string> mylist = new MySLList<string>();
 			mylist.Add("q");
 			mylist.Add("qw");
+			mylist.Add(null);
+			mylist.Add("qwer");
+			mylist.Add("qwert");
+			mylist.Add("qwerty");
 
 			Console.WriteLine(mylist);
 			Console.WriteLine();
 
-			mylist.DeleteAfter(new Node<string>("qw"));
+			mylist.DeleteByData("qw");
 
 			Console.WriteLine(mylist);
 			Console.WriteLine();

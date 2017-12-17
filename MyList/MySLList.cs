@@ -104,7 +104,7 @@ namespace MySLList
 			{
 				return false;
 			}
-			if ((First.Data == null && data == null) || First.Data.Equals(data))
+			if (Object.Equals(First.Data, data))
 			{
 				DeleteFirst();
 				return true;
@@ -112,7 +112,7 @@ namespace MySLList
 
 			for (Node<T> temp = First.Next, prev = First; temp != null; prev = temp, temp = temp.Next)
 			{
-				if ((temp.Data == null && data == null) || temp.Data.Equals(data))
+				if (Object.Equals(temp.Data, data))
 				{
 					prev.Next = temp.Next;
 					Count--;
@@ -137,16 +137,10 @@ namespace MySLList
 			{
 				return;
 			}
-			
-			foreach (Node<T> node in GetNodes())
+
+			if (paste.Next != null)
 			{
-				if ((node.Data == null && paste.Data == null) || node.Data.Equals(paste.Data))
-				{
-					if (node.Next != null)
-					{
-						node.Next = node.Next.Next;
-					}
-				}
+				paste.Next = paste.Next.Next;
 			}
 		}
 
@@ -205,7 +199,7 @@ namespace MySLList
 			return copy;
 		}
 
-		public void Reset()
+		public void Clear()
 		{
 			First = null;
 			Count = 0;
@@ -242,10 +236,11 @@ namespace MySLList
 
 		private void CheckBounds(int index)
 		{
-			if (index < 0 || index > Count)
+			if (index >= 0 && index < Count)
 			{
-				throw new ArgumentOutOfRangeException(nameof(index));
+				return;
 			}
+			throw new ArgumentOutOfRangeException(nameof(index));
 		}
 
 		private IEnumerable<Node<T>> GetNodes()
