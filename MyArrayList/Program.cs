@@ -27,9 +27,16 @@ namespace MyArrayList
 
 			mylist.TrimToSize();
 
-			mylist.Insert(3, "qweqweqwe");
+			mylist.Insert(4, "qweqweqwe");
 
 			mylist.Remove("qw");
+
+			var lines = new string[10]
+			{
+				"1","2","3","4","5","","","","",""
+			};
+
+			mylist.CopyTo(lines, 5);
 
 			Console.WriteLine(mylist.Contains("qwe"));
 

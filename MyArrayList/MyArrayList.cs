@@ -10,7 +10,7 @@ namespace MyArrayList
 	class MyArrayList<T>: IList<T>
 	{
 		private T[] array;
-		private static int defaultCapacity = 10;
+		private const int defaultCapacity = 10;
 
 		public int Count { get; private set; }
 
@@ -26,7 +26,7 @@ namespace MyArrayList
 			}
 		}
 
-		public bool IsReadOnly { get; set; }
+		public bool IsReadOnly { get; } = false;
 
 		public MyArrayList()
 		{
@@ -66,7 +66,7 @@ namespace MyArrayList
 		{
 			for (int i = 0; i < Count; i++)
 			{
-				if (Object.Equals(item, array[i]))
+				if (object.Equals(item, array[i]))
 				{
 					return i;
 				}
@@ -82,8 +82,8 @@ namespace MyArrayList
 			{
 				IncreaseCapacity();
 			}
-			array[index] = item;
 			Array.Copy(array, index, array, index + 1, Count - index);
+			array[index] = item;
 			Count++;
 		}
 
@@ -96,16 +96,16 @@ namespace MyArrayList
 
 		public bool Contains(T item)
 		{
-			return IndexOf(item) != -1 ? true : false;
+			return IndexOf(item) != -1;
 		}
 
 		public void CopyTo(T[] arr, int arrIndex)
 		{
-			if (arrIndex + Count >= arr.Length)
+			if (arrIndex + Count > arr.Length)
 			{
 				throw new ArgumentOutOfRangeException("массив слишком мал.");
 			}
-			Array.Copy(array, 0, arr, arrIndex, Count - 1);
+			Array.Copy(array, 0, arr, arrIndex, Count);
 		}
 
 		public bool Remove(T item)
@@ -121,16 +121,21 @@ namespace MyArrayList
 
 		public void TrimToSize()
 		{
-			T[] oldItems = array;
-			array = new T[Count];
-			Array.Copy(oldItems, array, array.Length);
+			if (Count < array.Length)
+			{
+				T[] oldItems = array;
+				array = new T[Count];
+				Array.Copy(oldItems, array, array.Length);
+			}
 		}
 
 		public void Clear()
 		{
-			IDisposable old = array as IDisposable;
-			array = new T[defaultCapacity];
-			old.Dispose();
+			for (int i = 0; i < array.Length; i++)
+			{
+				array[i] = default(T);
+			}
+			Count = 0;	
 		}
 
 		private void CheckBounds(int index)
@@ -177,8 +182,14 @@ namespace MyArrayList
 
 		public IEnumerator<T> GetEnumerator()
 		{
+			int initialCount = Count;
+			
 			foreach (T member in array)
 			{
+				if (initialCount != Count)
+				{
+					throw new FieldAccessException("кол-во элементов изменилось.");
+				}
 				yield return member;
 			}
 		}
