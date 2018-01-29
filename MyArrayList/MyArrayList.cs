@@ -78,9 +78,14 @@ namespace MyArrayList
 		{
 			CheckBounds(index);
 
-			if (Count + 1 >= array.Length)
+			if (Count >= array.Length)
 			{
 				IncreaseCapacity();
+			}
+			if (index == Count)
+			{
+				Add(item);
+				return;
 			}
 			Array.Copy(array, index, array, index + 1, Count - index);
 			array[index] = item;
@@ -135,7 +140,7 @@ namespace MyArrayList
 			{
 				array[i] = default(T);
 			}
-			Count = 0;	
+			Count = 0;
 		}
 
 		private void CheckBounds(int index)
@@ -188,7 +193,7 @@ namespace MyArrayList
 			{
 				if (initialCount != Count)
 				{
-					throw new FieldAccessException("кол-во элементов изменилось.");
+					throw new ArgumentException("кол-во элементов изменилось.");
 				}
 				yield return member;
 			}
